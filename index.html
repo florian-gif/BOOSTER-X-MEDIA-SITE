@@ -86,90 +86,91 @@
   </section>
 
   <!-- MODAL FORM -->
-  <div id="modal" class="fixed inset-0 hidden items-center justify-center bg-black/70 p-4">
-    <div class="w-full max-w-md rounded-2xl bg-slate-900 border border-slate-800 p-6">
-      <h3 class="text-xl font-bold text-white">Infos nécessaires</h3>
-      <p class="text-slate-400 text-sm mt-1">Renseigne ton pseudo et (si likes) le lien du post.</p>
-      <form id="orderForm" class="mt-4 space-y-3">
-        <input type="hidden" id="pack" name="pack">
-        <input type="hidden" id="platform" name="platform">
-        <input type="hidden" id="type" name="type">
-        <input type="hidden" id="amount" name="amount">
-        <div>
-          <label class="block text-sm mb-1">Pseudo (sans @)</label>
-          <input id="handle" required class="w-full rounded-lg bg-slate-800 border border-slate-700 px-3 py-2" placeholder="ex: moncompte.ig">
-        </div>
-        <div id="postLinkWrap">
-          <label class="block text-sm mb-1">Lien du post (pour Likes)</label>
-          <input id="postLink" class="w-full rounded-lg bg-slate-800 border border-slate-700 px-3 py-2" placeholder="https://instagram.com/p/...">
-        </div>
-        <div>
-          <label class="block text-sm mb-1">Email (reçu de commande)</label>
-          <input id="email" type="email" required class="w-full rounded-lg bg-slate-800 border border-slate-700 px-3 py-2" placeholder="ton@email.com">
-        </div>
-        <div class="flex gap-3 pt-2">
-          <button type="button" id="cancelBtn" class="flex-1 rounded-xl border border-slate-700 px-4 py-2">Annuler</button>
-          <button type="submit" class="flex-1 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2">Valider & Payer</button>
-        </div>
-      </form>
-    </div>
+<div id="modal" class="fixed inset-0 hidden items-center justify-center bg-black/70 p-4">
+  <div class="w-full max-w-md rounded-2xl bg-slate-900 border border-slate-800 p-6">
+    <h3 class="text-xl font-bold text-white">Infos nécessaires</h3>
+    <p class="text-slate-400 text-sm mt-1">Renseigne ton pseudo et (si likes) le lien du post.</p>
+
+    <form id="orderForm" class="mt-4 space-y-3">
+      <input type="hidden" id="pack" name="pack">
+      <input type="hidden" id="platform" name="platform">
+      <input type="hidden" id="type" name="type">
+      <input type="hidden" id="amount" name="amount">
+
+      <div>
+        <label class="block text-sm mb-1">Pseudo (sans @)</label>
+        <input id="handle" required class="w-full rounded-lg bg-slate-800 border border-slate-700 px-3 py-2" placeholder="ex: moncompte.ig">
+      </div>
+
+      <div>
+        <label class="block text-sm mb-1">Lien du post (si likes)</label>
+        <input id="postLink" class="w-full rounded-lg bg-slate-800 border border-slate-700 px-3 py-2" placeholder="https://instagram.com/p/...">
+      </div>
+
+      <div>
+        <label class="block text-sm mb-1">Email (reçu de commande)</label>
+        <input id="email" type="email" required class="w-full rounded-lg bg-slate-800 border border-slate-700 px-3 py-2" placeholder="ton@email.com">
+      </div>
+
+      <div class="flex gap-3 pt-2">
+        <button type="button" id="cancelBtn" class="flex-1 rounded-xl border border-slate-700 px-4 py-2">Annuler</button>
+        <button type="submit" class="flex-1 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2">Valider & Payer</button>
+      </div>
+    </form>
   </div>
+</div>
 
-  <footer class="text-center text-slate-500 text-sm py-10">© 2025 BoosterX Media — Visibilité sans effort, résultats garantis.</footer>
+<footer class="text-center text-slate-500 text-sm py-10">© 2025 BoosterX Media — Visibilité sans effort, résultats garantis.</footer>
 
-  <script>
-    const PAYPAL_HANDLE = "FlorianDemaison615";                 // ton PayPal.Me
-    const WHATSAPP_NUMBER = "33770111399";                      // ton WhatsApp (international sans +)
+<script>
+  const PAYPAL_HANDLE = "FlorianDemaison615"; // ton PayPal.Me
+  const WHATSAPP_NUMBER = "33770111399";      // ton WhatsApp (format international SANS +)
 
-    const modal = document.getElementById('modal');
-    const form = document.getElementById('orderForm');
-    const postLinkWrap = document.getElementById('postLinkWrap');
+  const modal = document.getElementById('modal');
+  const form = document.getElementById('orderForm');
 
-    // Ouvrir le formulaire avec les infos du pack
-    document.querySelectorAll('.order-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.getElementById('pack').value = btn.dataset.pack;
-        document.getElementById('platform').value = btn.dataset.platform;
-        document.getElementById('type').value = btn.dataset.type;
-        document.getElementById('amount').value = btn.dataset.amount;
+  // Ouvrir le formulaire avec les infos du pack
+  document.querySelectorAll('.order-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.getElementById('pack').value = btn.dataset.pack;
+      document.getElementById('platform').value = btn.dataset.platform;
+      document.getElementById('type').value = btn.dataset.type;
+      document.getElementById('amount').value = btn.dataset.amount;
 
-        // si "likes" => montrer le champ lien du post
-        postLinkWrap.style.display = (btn.dataset.type === 'likes') ? 'block' : 'none';
-
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
-      });
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
     });
+  });
 
-    // Fermer
-    document.getElementById('cancelBtn').onclick = () => {
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
-      form.reset();
-    };
+  // Fermer
+  document.getElementById('cancelBtn').onclick = () => {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+    form.reset();
+  };
 
-    // Soumission : ouvrir PayPal + ouvrir WhatsApp avec message prérempli
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
+  // Soumission : ouvre PayPal + envoie un message WhatsApp avec toutes les infos
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
 
-      const pack = document.getElementById('pack').value;
-      const platform = document.getElementById('platform').value;
-      const type = document.getElementById('type').value;
-      const amount = document.getElementById('amount').value;
-      const handle = document.getElementById('handle').value.trim();
-      const postLink = document.getElementById('postLink').value.trim();
-      const email = document.getElementById('email').value.trim();
+    const pack = document.getElementById('pack').value;
+    const platform = document.getElementById('platform').value;
+    const type = document.getElementById('type').value; // followers | likes
+    const amount = document.getElementById('amount').value;
+    const handle = document.getElementById('handle').value.trim();
+    const postLink = document.getElementById('postLink').value.trim();
+    const email = document.getElementById('email').value.trim();
 
-      if(!handle){ alert("Merci d’indiquer ton pseudo."); return; }
-      if(type === 'likes' && !postLink){ alert("Merci d’indiquer le lien du post pour les likes."); return; }
+    if (!handle) { alert("Merci d’indiquer ton pseudo."); return; }
+    if (type === 'likes' && !postLink) { alert("Merci d’indiquer le lien du post pour les likes."); return; }
 
-      // 1) Ouvrir PayPal paiement dans un nouvel onglet
-      const paypalUrl = `https://paypal.me/${PAYPAL_HANDLE}/${amount}`;
-      window.open(paypalUrl, '_blank');
+    // 1) Payer sur PayPal
+    const paypalUrl = `https://paypal.me/${PAYPAL_HANDLE}/${amount}`;
+    window.open(paypalUrl, '_blank');
 
-      // 2) Ouvrir WhatsApp avec message prérempli (tu reçois toutes les infos)
-      const msg = encodeURIComponent(
-        `Nouvelle commande BoosterX ✅
+    // 2) Message WhatsApp avec les infos
+    const msg = encodeURIComponent(
+`Nouvelle commande BoosterX ✅
 Pack : ${pack}
 Plateforme : ${platform}
 Type : ${type}
@@ -177,16 +178,13 @@ Montant : ${amount}€
 Pseudo : ${handle}
 Lien du post : ${postLink || '—'}
 Email : ${email}`
-      );
-      const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
-      window.open(waUrl, '_blank');
+    );
+    const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
+    window.open(waUrl, '_blank');
 
-      // fermer le modal
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
-      form.reset();
-      alert("Merci ! Paiement ouvert. Envoie validé sur WhatsApp ✅");
-    });
-  </script>
-</body>
-</html>
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+    form.reset();
+    alert("Parfait ! Paiement ouvert et message WhatsApp pré-rempli envoyé ✅");
+  });
+</script>
