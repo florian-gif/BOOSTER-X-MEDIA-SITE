@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BoosterX Media — Packs</title>
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- PayPal SDK : CB invitée activée -->
+  <script src="https://www.paypal.com/sdk/js?client-id=AXPNEm1nW0iJ1zQHIS-MrDmxfHO1WWyu2jvjwPdxu89MlWmYIcbKvmUhA9p9Z77_ivM9d0ue2ReuzlWH&currency=EUR&enable-funding=card&intent=CAPTURE"></script>
 </head>
 <body class="bg-slate-950 text-slate-200 min-h-screen">
   <!-- HEADER -->
@@ -16,7 +19,7 @@
   <!-- HERO -->
   <section class="max-w-6xl mx-auto px-6 text-center py-10">
     <h2 class="text-4xl font-extrabold text-white">Visibilité sans effort,<br>Résultats garantis.</h2>
-    <p class="mt-3 text-slate-300">Boostez vos abonnés et likes Instagram & TikTok. Livraison 24–48h. Paiement PayPal.</p>
+    <p class="mt-3 text-slate-300">Boostez vos abonnés et likes Instagram & TikTok. Livraison 24–48h. Paiement CB/PayPal.</p>
   </section>
 
   <!-- PACKS -->
@@ -86,90 +89,130 @@
   </section>
 
   <!-- MODAL FORM -->
-<div id="modal" class="fixed inset-0 hidden items-center justify-center bg-black/70 p-4">
-  <div class="w-full max-w-md rounded-2xl bg-slate-900 border border-slate-800 p-6">
-    <h3 class="text-xl font-bold text-white">Infos nécessaires</h3>
-    <p class="text-slate-400 text-sm mt-1">Renseigne ton pseudo et (si likes) le lien du post.</p>
+  <div id="modal" class="fixed inset-0 hidden items-center justify-center bg-black/70 p-4">
+    <div class="w-full max-w-md rounded-2xl bg-slate-900 border border-slate-800 p-6">
+      <h3 class="text-xl font-bold text-white">Infos nécessaires</h3>
+      <p class="text-slate-400 text-sm mt-1">Renseigne ton pseudo et (si likes) le lien du post.</p>
 
-    <form id="orderForm" class="mt-4 space-y-3">
-      <input type="hidden" id="pack" name="pack">
-      <input type="hidden" id="platform" name="platform">
-      <input type="hidden" id="type" name="type">
-      <input type="hidden" id="amount" name="amount">
+      <form id="orderForm" class="mt-4 space-y-3" onsubmit="return false;">
+        <input type="hidden" id="pack" name="pack">
+        <input type="hidden" id="platform" name="platform">
+        <input type="hidden" id="type" name="type">
+        <input type="hidden" id="amount" name="amount">
 
-      <div>
-        <label class="block text-sm mb-1">Pseudo (sans @)</label>
-        <input id="handle" required class="w-full rounded-lg bg-slate-800 border border-slate-700 px-3 py-2" placeholder="ex: moncompte.ig">
-      </div>
+        <div>
+          <label class="block text-sm mb-1">Pseudo (sans @)</label>
+          <input id="handle" required class="w-full rounded-lg bg-slate-800 border border-slate-700 px-3 py-2" placeholder="ex: moncompte.ig">
+        </div>
 
-      <div>
-        <label class="block text-sm mb-1">Lien du post (si likes)</label>
-        <input id="postLink" class="w-full rounded-lg bg-slate-800 border border-slate-700 px-3 py-2" placeholder="https://instagram.com/p/...">
-      </div>
+        <div>
+          <label class="block text-sm mb-1">Lien du post (si likes)</label>
+          <input id="postLink" class="w-full rounded-lg bg-slate-800 border border-slate-700 px-3 py-2" placeholder="https://instagram.com/p/...">
+        </div>
 
-      <div>
-        <label class="block text-sm mb-1">Email (reçu de commande)</label>
-        <input id="email" type="email" required class="w-full rounded-lg bg-slate-800 border border-slate-700 px-3 py-2" placeholder="ton@email.com">
-      </div>
+        <div>
+          <label class="block text-sm mb-1">Email (reçu de commande)</label>
+          <input id="email" type="email" required class="w-full rounded-lg bg-slate-800 border border-slate-700 px-3 py-2" placeholder="ton@email.com">
+        </div>
 
-      <div class="flex gap-3 pt-2">
-        <button type="button" id="cancelBtn" class="flex-1 rounded-xl border border-slate-700 px-4 py-2">Annuler</button>
-        <button type="submit" class="flex-1 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2">Valider & Payer</button>
-      </div>
-    </form>
+        <div class="flex gap-3 pt-2">
+          <button type="button" id="cancelBtn" class="flex-1 rounded-xl border border-slate-700 px-4 py-2">Annuler</button>
+        </div>
+
+        <!-- Bouton PayPal/CB rendu ici -->
+        <div id="paypal-button-container" class="mt-4"></div>
+      </form>
+    </div>
   </div>
-</div>
 
-<footer class="text-center text-slate-500 text-sm py-10">© 2025 BoosterX Media — Visibilité sans effort, résultats garantis.</footer>
+  <footer class="text-center text-slate-500 text-sm py-10">© 2025 BoosterX Media — Visibilité sans effort, résultats garantis.</footer>
 
-<script>
-  const PAYPAL_HANDLE = "FlorianDemaison615"; // ton PayPal.Me
-  const WHATSAPP_NUMBER = "33770111399";      // ton WhatsApp (format international SANS +)
+  <script>
+    const WHATSAPP_NUMBER = "33770111399"; // format international SANS +
 
-  const modal = document.getElementById('modal');
-  const form = document.getElementById('orderForm');
+    const modal = document.getElementById('modal');
+    const form = document.getElementById('orderForm');
 
-  // Ouvrir le formulaire avec les infos du pack
-  document.querySelectorAll('.order-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.getElementById('pack').value = btn.dataset.pack;
-      document.getElementById('platform').value = btn.dataset.platform;
-      document.getElementById('type').value = btn.dataset.type;
-      document.getElementById('amount').value = btn.dataset.amount;
+    // Ouvrir le formulaire avec les infos du pack
+    document.querySelectorAll('.order-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.getElementById('pack').value = btn.dataset.pack;
+        document.getElementById('platform').value = btn.dataset.platform;
+        document.getElementById('type').value = btn.dataset.type;
+        document.getElementById('amount').value = btn.dataset.amount;
 
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+
+        // (re)rend le bouton PayPal pour ce pack
+        renderPayPalButton();
+      });
     });
-  });
 
-  // Fermer
-  document.getElementById('cancelBtn').onclick = () => {
-    modal.classList.add('hidden');
-    modal.classList.remove('flex');
-    form.reset();
-  };
+    // Fermer
+    document.getElementById('cancelBtn').onclick = () => {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      form.reset();
+      // Nettoyer le bouton pour éviter les doubles-renders
+      const ctn = document.getElementById('paypal-button-container');
+      if (ctn) ctn.innerHTML = '';
+    };
 
-  // Soumission : ouvre PayPal + envoie un message WhatsApp avec toutes les infos
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
+    // Re-render du bouton si l'utilisateur modifie un champ
+    form.addEventListener('input', () => {
+      // Throttle simple : ne re-render que si un bouton n'est pas déjà présent
+      const ctn = document.getElementById('paypal-button-container');
+      if (ctn && !ctn.querySelector('iframe')) renderPayPalButton();
+    });
 
-    const pack = document.getElementById('pack').value;
-    const platform = document.getElementById('platform').value;
-    const type = document.getElementById('type').value; // followers | likes
-    const amount = document.getElementById('amount').value;
-    const handle = document.getElementById('handle').value.trim();
-    const postLink = document.getElementById('postLink').value.trim();
-    const email = document.getElementById('email').value.trim();
+    function renderPayPalButton() {
+      const pack = document.getElementById('pack').value;
+      const platform = document.getElementById('platform').value;
+      const type = document.getElementById('type').value;
+      const amount = document.getElementById('amount').value;
+      const handle = document.getElementById('handle').value.trim();
+      const postLink = document.getElementById('postLink').value.trim();
+      const email = document.getElementById('email').value.trim();
 
-    if (!handle) { alert("Merci d’indiquer ton pseudo."); return; }
-    if (type === 'likes' && !postLink) { alert("Merci d’indiquer le lien du post pour les likes."); return; }
+      const container = document.getElementById('paypal-button-container');
+      if (!container) return;
 
-    // 1) Payer sur PayPal
-    const paypalUrl = `https://paypal.me/${PAYPAL_HANDLE}/${amount}`;
-    window.open(paypalUrl, '_blank');
+      // Reset container avant chaque render
+      container.innerHTML = '';
 
-    // 2) Message WhatsApp avec les infos
-    const msg = encodeURIComponent(
+      paypal.Buttons({
+        fundingSource: paypal.FUNDING.CARD, // CB uniquement (pas de wallet)
+        onInit: (data, actions) => {
+          // Désactiver tant que les champs requis ne sont pas OK
+          actions.disable();
+          const check = () => {
+            const okBase = !!handle && !!email && !!amount;
+            const okLikes = (type === 'likes') ? !!postLink : true;
+            (okBase && okLikes) ? actions.enable() : actions.disable();
+          };
+          check();
+          form.addEventListener('input', check);
+        },
+        createOrder: (data, actions) => {
+          // Double-check minimal
+          if (!handle) { alert("Merci d’indiquer ton pseudo."); return; }
+          if (!email) { alert("Merci d’indiquer ton email."); return; }
+          if (type === 'likes' && !postLink) { alert("Merci d’indiquer le lien du post pour les likes."); return; }
+
+          const meta = { pack, platform, type, amount, handle, postLink, email };
+
+          return actions.order.create({
+            purchase_units: [{
+              description: `BoosterX Media – ${pack}`,
+              custom_id: JSON.stringify(meta),
+              amount: { currency_code: 'EUR', value: parseFloat(amount).toFixed(2) }
+            }]
+          });
+        },
+        onApprove: (data, actions) => actions.order.capture().then(order => {
+          // Après paiement : ouvrir WhatsApp avec toutes les infos
+          const msg = encodeURIComponent(
 `Nouvelle commande BoosterX ✅
 Pack : ${pack}
 Plateforme : ${platform}
@@ -178,13 +221,23 @@ Montant : ${amount}€
 Pseudo : ${handle}
 Lien du post : ${postLink || '—'}
 Email : ${email}`
-    );
-    const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
-    window.open(waUrl, '_blank');
+          );
+          const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
+          window.open(waUrl, '_blank');
 
-    modal.classList.add('hidden');
-    modal.classList.remove('flex');
-    form.reset();
-    alert("Parfait ! Paiement ouvert et message WhatsApp pré-rempli envoyé ✅");
-  });
-</script>
+          modal.classList.add('hidden');
+          modal.classList.remove('flex');
+          form.reset();
+          container.innerHTML = '';
+          alert("✅ Paiement confirmé et message WhatsApp envoyé !");
+          console.log("ORDER", order);
+        }),
+        onError: (err) => {
+          console.error(err);
+          alert("⚠️ Paiement refusé ou interrompu.");
+        }
+      }).render('#paypal-button-container');
+    }
+  </script>
+</body>
+</html>
