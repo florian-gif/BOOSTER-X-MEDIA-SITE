@@ -6,7 +6,7 @@
   <title>BoosterX Media — Packs</title>
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- PayPal SDK avec ton Client ID -->
+  <!-- PayPal SDK avec ton Client ID LIVE -->
   <script src="https://www.paypal.com/sdk/js?client-id=AXPNEm1nW0iJ1zQHIS-MrDmxfHO1WWyu2jvjwPdxu89MlWmYIcbKvmUhA9p9Z77_ivM9d0ue2ReuzlWH&currency=EUR&enable-funding=card&intent=CAPTURE"></script>
 </head>
 <body class="bg-slate-950 text-slate-200 min-h-screen">
@@ -144,8 +144,7 @@
         modal.classList.remove('hidden');
         modal.classList.add('flex');
 
-        // Rendre le bouton PayPal
-        renderPayPalButton();
+        renderPayPalButton(); // affiche le bouton
       });
     });
 
@@ -154,64 +153,95 @@
       modal.classList.add('hidden');
       modal.classList.remove('flex');
       form.reset();
-      document.getElementById('paypal-button-container').innerHTML = '';
+      const ctn = document.getElementById('paypal-button-container');
+      if (ctn) ctn.innerHTML = '';
     };
 
-    function renderPayPalButton() {
-      const pack = document.getElementById('pack').value;
-      const platform = document.getElementById('platform').value;
-      const type = document.getElementById('type').value;
-      const amount = document.getElementById('amount').value;
+    // ---- Helpers de vérif (lisent TOUJOURS la valeur courante du DOM)
+    function formStateOK() {
       const handle = document.getElementById('handle').value.trim();
-      const postLink = document.getElementById('postLink').value.trim();
-      const email = document.getElementById('email').value.trim();
+      const email  = document.getElementById('email').value.trim();
+      const type   = document.getElementById('type').value;
+      const post   = document.getElementById('postLink').value.trim();
+      const amount = document.getElementById('amount').value;
+      const baseOK = !!handle && !!email && !!amount;
+      const likesOK = (type === 'likes') ? !!post : true;
+      return baseOK && likesOK;
+    }
 
+    function getMeta() {
+      return {
+        pack: document.getElementById('pack').value,
+        platform: document.getElementById('platform').value,
+        type: document.getElementById('type').value,
+        amount: document.getElementById('amount').value,
+        handle: document.getElementById('handle').value.trim(),
+        postLink: document.getElementById('postLink').value.trim(),
+        email: document.getElementById('email').value.trim()
+      };
+    }
+
+    function renderPayPalButton() {
       const container = document.getElementById('paypal-button-container');
       container.innerHTML = '';
 
-      paypal.Buttons({
-        fundingSource: paypal.FUNDING.CARD,
+      // Config commune
+      const commonConfig = {
         onInit: (data, actions) => {
-          actions.disable();
-          form.addEventListener('input', () => {
-            const okBase = !!handle && !!email && !!amount;
-            const okLikes = (type === 'likes') ? !!postLink : true;
-            (okBase && okLikes) ? actions.enable() : actions.disable();
-          });
+          // activer/désactiver dynamiquement en lisant les champs à CHAQUE input
+          const toggle = () => formStateOK() ? actions.enable() : actions.disable();
+          toggle();
+          form.addEventListener('input', toggle);
         },
         createOrder: (data, actions) => {
+          if (!formStateOK()) {
+            alert("Merci de remplir les champs requis (pseudo, email et lien du post si likes).");
+            return;
+          }
+          const meta = getMeta();
           return actions.order.create({
             purchase_units: [{
-              description: `BoosterX Media – ${pack}`,
-              amount: { currency_code: 'EUR', value: parseFloat(amount).toFixed(2) },
-              custom_id: JSON.stringify({ pack, platform, type, amount, handle, postLink, email })
+              description: `BoosterX Media – ${meta.pack}`,
+              amount: { currency_code: 'EUR', value: parseFloat(meta.amount).toFixed(2) },
+              custom_id: JSON.stringify(meta)
             }]
           });
         },
         onApprove: (data, actions) => actions.order.capture().then(order => {
+          const m = getMeta();
           const msg = encodeURIComponent(
 `Nouvelle commande BoosterX ✅
-Pack : ${pack}
-Plateforme : ${platform}
-Type : ${type}
-Montant : ${amount}€
-Pseudo : ${handle}
-Lien du post : ${postLink || '—'}
-Email : ${email}`
+Pack : ${m.pack}
+Plateforme : ${m.platform}
+Type : ${m.type}
+Montant : ${m.amount}€
+Pseudo : ${m.handle}
+Lien du post : ${m.postLink || '—'}
+Email : ${m.email}`
           );
-          const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
-          window.open(waUrl, '_blank');
+          window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, '_blank');
           modal.classList.add('hidden');
           modal.classList.remove('flex');
           form.reset();
           container.innerHTML = '';
           alert("✅ Paiement confirmé et WhatsApp envoyé !");
+          console.log("ORDER", order);
         }),
         onError: (err) => {
           console.error(err);
           alert("⚠️ Paiement refusé ou interrompu.");
         }
-      }).render('#paypal-button-container');
+      };
+
+      // 1) Essayer le bouton CB direct
+      const cardButtons = paypal.Buttons({ fundingSource: paypal.FUNDING.CARD, ...commonConfig });
+
+      if (cardButtons.isEligible()) {
+        cardButtons.render('#paypal-button-container');
+      } else {
+        // 2) Fallback : bouton standard (affichera CB si éligible côté PayPal)
+        paypal.Buttons(commonConfig).render('#paypal-button-container');
+      }
     }
   </script>
 </body>
