@@ -10,7 +10,7 @@
 <body class="bg-slate-950 text-slate-200 min-h-screen">
   <header class="flex items-center justify-between max-w-3xl mx-auto px-6 py-5">
     <h1 class="text-xl font-bold text-indigo-400">🚀 BoosterX Media</h1>
-    <a href="/" class="text-slate-300 hover:text-white underline">← Retour aux packs</a>
+    <a href="index.html" class="text-slate-300 hover:text-white underline">← Retour aux packs</a>
   </header>
 
   <main class="max-w-3xl mx-auto px-6 py-10">
@@ -22,7 +22,7 @@
 
       <div class="mt-6 flex flex-wrap items-center gap-3">
         <a id="waBtn" href="#" target="_blank" rel="noopener" class="rounded-xl bg-green-600 hover:bg-green-500 text-white px-4 py-2">📲 Ouvrir WhatsApp</a>
-        <a href="/" class="rounded-xl border border-slate-700 px-4 py-2">⬅️ Retour aux packs</a>
+        <a href="index.html" class="rounded-xl border border-slate-700 px-4 py-2">⬅️ Retour aux packs</a>
       </div>
 
       <p class="text-slate-400 text-xs mt-4">Si WhatsApp ne s’ouvre pas, copiez/collez le récap dans votre conversation.</p>
@@ -34,18 +34,38 @@
   <script>
     const WHATSAPP_NUMBER = "33770111399";
 
-    function qs(k){ return new URLSearchParams(location.search).get(k) || ''; }
+    function getParam(k){ return new URLSearchParams(location.search).get(k) || ''; }
 
     (function load(){
-      const data = {
-        pack: qs('pack'),
-        platform: qs('platform'),
-        type: qs('type'),
-        amount: qs('amount'),
-        handle: qs('handle'),
-        post: qs('post'),
-        email: qs('email')
+      // 1) Essaye via l'URL
+      let data = {
+        pack: getParam('pack'),
+        platform: getParam('platform'),
+        type: getParam('type'),
+        amount: getParam('amount'),
+        handle: getParam('handle'),
+        post: getParam('post'),
+        email: getParam('email')
       };
+
+      // 2) Si pas d'URL => récupère depuis sessionStorage (backup)
+      if(!data.pack){
+        try{
+          const raw = sessionStorage.getItem('bx_last_order');
+          if(raw){
+            const o = JSON.parse(raw);
+            data = {
+              pack: o.pack || '',
+              platform: o.platform || '',
+              type: o.type || '',
+              amount: o.amount || '',
+              handle: o.handle || '',
+              post: o.postLink || '',
+              email: o.email || ''
+            };
+          }
+        }catch(e){}
+      }
 
       const recap = document.getElementById('recap');
       if(!data.pack){
