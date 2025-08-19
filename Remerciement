@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Merci — BoosterX Media</title>
+  <meta name="robots" content="noindex">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-950 text-slate-200 min-h-screen">
+  <header class="flex items-center justify-between max-w-3xl mx-auto px-6 py-5">
+    <h1 class="text-xl font-bold text-indigo-400">🚀 BoosterX Media</h1>
+    <a href="/" class="text-slate-300 hover:text-white underline">← Retour aux packs</a>
+  </header>
+
+  <main class="max-w-3xl mx-auto px-6 py-10">
+    <div class="rounded-2xl bg-slate-900 border border-slate-800 p-6">
+      <h2 class="text-3xl font-bold text-white">Merci pour votre commande 🙌</h2>
+      <p class="text-slate-300 mt-2">Pour lancer la livraison, envoyez-nous la confirmation sur WhatsApp avec le récap ci-dessous.</p>
+
+      <div id="recap" class="mt-6 grid gap-3 text-sm"></div>
+
+      <div class="mt-6 flex flex-wrap items-center gap-3">
+        <a id="waBtn" href="#" target="_blank" rel="noopener" class="rounded-xl bg-green-600 hover:bg-green-500 text-white px-4 py-2">📲 Ouvrir WhatsApp</a>
+        <a href="/" class="rounded-xl border border-slate-700 px-4 py-2">⬅️ Retour aux packs</a>
+      </div>
+
+      <p class="text-slate-400 text-xs mt-4">Si WhatsApp ne s’ouvre pas, copiez/collez le récap dans votre conversation.</p>
+    </div>
+  </main>
+
+  <footer class="text-center text-slate-500 text-sm py-10">© 2025 BoosterX Media — Visibilité sans effort, résultats garantis.</footer>
+
+  <script>
+    const WHATSAPP_NUMBER = "33770111399";
+
+    function qs(k){ return new URLSearchParams(location.search).get(k) || ''; }
+
+    (function load(){
+      const data = {
+        pack: qs('pack'),
+        platform: qs('platform'),
+        type: qs('type'),
+        amount: qs('amount'),
+        handle: qs('handle'),
+        post: qs('post'),
+        email: qs('email')
+      };
+
+      const recap = document.getElementById('recap');
+      if(!data.pack){
+        recap.innerHTML = `<div class="text-slate-300">Aucune commande à afficher. Revenez aux packs et validez un pack.</div>`;
+      } else {
+        recap.innerHTML = `
+          <div><span class="text-slate-400">Pack :</span> <span class="text-white font-semibold">${data.pack}</span></div>
+          <div><span class="text-slate-400">Plateforme :</span> <span class="text-white">${data.platform}</span></div>
+          <div><span class="text-slate-400">Type :</span> <span class="text-white">${data.type}</span></div>
+          <div><span class="text-slate-400">Montant :</span> <span class="text-white">${data.amount} €</span></div>
+          <div><span class="text-slate-400">Pseudo :</span> <span class="text-white break-all">${data.handle}</span></div>
+          <div><span class="text-slate-400">Lien du post :</span> ${
+            data.post ? `<a class="text-indigo-300 underline break-words" href="${data.post}" target="_blank" rel="noopener">${data.post}</a>` : '—'
+          }</div>
+          <div><span class="text-slate-400">Email :</span> <span class="text-white break-all">${data.email}</span></div>
+        `;
+      }
+
+      const msg = encodeURIComponent(
+`Nouvelle commande BoosterX ✅
+Pack : ${data.pack || '—'}
+Plateforme : ${data.platform || '—'}
+Type : ${data.type || '—'}
+Montant : ${data.amount || '—'}€
+Pseudo : ${data.handle || '—'}
+Lien du post : ${data.post || '—'}
+Email : ${data.email || '—'}`
+      );
+      const wa = `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
+      document.getElementById('waBtn').href = wa;
+    })();
+  </script>
+</body>
+</html>
