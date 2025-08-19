@@ -225,7 +225,7 @@
       form.reset();
     };
 
-    // Submit : redirection PayPal (même onglet) + bannière avec liens prêt-à-cliquer
+    // Submit : redirection PayPal (même onglet) + bannière avec liens prêts
     form.addEventListener('submit', (e) => {
       e.preventDefault();
 
@@ -242,10 +242,8 @@
         alert("Merci d’indiquer le lien du post (requis pour les likes/combos)."); return;
       }
 
-      // Liens (tout est passé dans l’URL → /merci.html et WhatsApp se remplissent tout seuls)
-      const qp = new URLSearchParams({
-        pack, platform, type, amount, handle, post: postLink || '', email
-      }).toString();
+      // Query params pour merci + message WhatsApp
+      const qp = new URLSearchParams({ pack, platform, type, amount, handle, post: postLink || '', email }).toString();
 
       const waMsg = encodeURIComponent(
 `Nouvelle commande BoosterX ✅
@@ -258,16 +256,17 @@ Lien du post : ${postLink || '—'}
 Email : ${email}`
       );
       const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${waMsg}`;
-      const merciUrl = `/merci.html?${qp}`;
+      const merciUrl = `merci.html?${qp}`; // 👈 RELATIF (fix GitHub Pages)
 
-      // Affiche la bannière avec les liens utiles (au cas où l’utilisateur revient)
+      // Sauvegarde simple (fallback si l'utilisateur va sur merci sans params)
+      sessionStorage.setItem('bx_last_order', JSON.stringify({ pack, platform, type, amount, handle, postLink, email }));
+      sessionStorage.setItem('bx_last_wa', waUrl);
+
+      // Affiche la bannière avec liens utiles
       const bar = document.getElementById('hintBar');
-      const hintWa = document.getElementById('hintWa');
-      const hintMerci = document.getElementById('hintMerci');
-      hintWa.href = waUrl;
-      hintMerci.href = merciUrl;
-      bar.classList.remove('hidden');
-      bar.classList.add('flex');
+      document.getElementById('hintWa').href = waUrl;
+      document.getElementById('hintMerci').href = merciUrl;
+      bar.classList.remove('hidden'); bar.classList.add('flex');
       document.getElementById('hintClose').onclick = ()=> bar.classList.add('hidden');
 
       // Redirection PayPal dans le même onglet (iOS friendly)
