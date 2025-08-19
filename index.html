@@ -3,260 +3,81 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BoosterX Media — Packs</title>
+  <title>Merci — BoosterX Media</title>
+  <meta name="robots" content="noindex">
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-slate-950 text-slate-200 min-h-screen">
-  <!-- HEADER -->
-  <header class="flex items-center justify-between max-w-6xl mx-auto px-6 py-5">
+  <header class="flex items-center justify-between max-w-3xl mx-auto px-6 py-5">
     <h1 class="text-xl font-bold text-indigo-400">🚀 BoosterX Media</h1>
-    <a href="https://wa.me/33770111399" class="rounded-xl px-4 py-2 bg-green-600 hover:bg-green-500 text-white">WhatsApp</a>
+    <a href="/" class="text-slate-300 hover:text-white underline">← Retour aux packs</a>
   </header>
 
-  <!-- HERO -->
-  <section class="max-w-6xl mx-auto px-6 text-center py-10">
-    <h2 class="text-4xl font-extrabold text-white">Visibilité sans effort,<br>Résultats garantis.</h2>
-    <p class="mt-3 text-slate-300">Boostez vos abonnés et likes Instagram & TikTok. Livraison 24–48h. Paiement PayPal.</p>
-  </section>
+  <main class="max-w-3xl mx-auto px-6 py-10">
+    <div class="rounded-2xl bg-slate-900 border border-slate-800 p-6">
+      <h2 class="text-3xl font-bold text-white">Merci pour votre commande 🙌</h2>
+      <p class="text-slate-300 mt-2">Pour lancer la livraison immédiatement, envoyez-nous la confirmation via WhatsApp avec le récap ci-dessous.</p>
 
-  <!-- PACKS CLASSIQUES -->
-  <section class="max-w-6xl mx-auto px-6 pb-6">
-    <h3 class="text-2xl font-bold text-white mb-6"> Nos Packs</h3>
-    <div class="grid gap-6 md:grid-cols-3">
-      <!-- IG Followers -->
-      <div class="bg-slate-900/70 border border-slate-800 rounded-2xl p-6 text-center">
-        <h4 class="text-lg font-semibold text-white mb-2">Instagram Followers</h4>
-        <ul class="text-slate-300 space-y-1 mb-4">
-          <li>1K → 15€</li>
-          <li>5K → 65€</li>
-          <li>10K → 120€</li>
-        </ul>
-        <div class="space-y-2">
-          <button class="order-btn w-full rounded-xl px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white"
-                  data-pack="Instagram Followers 1K" data-platform="Instagram" data-type="followers" data-amount="15">Acheter 1K</button>
-          <button class="order-btn w-full rounded-xl px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white"
-                  data-pack="Instagram Followers 5K" data-platform="Instagram" data-type="followers" data-amount="65">Acheter 5K</button>
-          <button class="order-btn w-full rounded-xl px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white"
-                  data-pack="Instagram Followers 10K" data-platform="Instagram" data-type="followers" data-amount="120">Acheter 10K</button>
-        </div>
-        <p class="mt-3 text-xs text-slate-400">Délais : 24–48h</p>
+      <div id="recap" class="mt-6 grid gap-3 text-sm">
+        <!-- Contenu injecté par JS -->
       </div>
 
-      <!-- IG Likes -->
-      <div class="bg-slate-900/70 border border-slate-800 rounded-2xl p-6 text-center">
-        <h4 class="text-lg font-semibold text-white mb-2">Instagram Likes</h4>
-        <ul class="text-slate-300 space-y-1 mb-4">
-          <li>500 → 2,50€</li>
-          <li>1K → 4,50€</li>
-          <li>5K → 15€</li>
-          <li>10K → 25€</li>
-        </ul>
-        <div class="space-y-2">
-          <button class="order-btn w-full rounded-xl px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white"
-                  data-pack="Instagram Likes 500" data-platform="Instagram" data-type="likes" data-amount="2.5">Acheter 500</button>
-          <button class="order-btn w-full rounded-xl px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white"
-                  data-pack="Instagram Likes 1K" data-platform="Instagram" data-type="likes" data-amount="4.5">Acheter 1K</button>
-          <button class="order-btn w-full rounded-xl px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white"
-                  data-pack="Instagram Likes 5K" data-platform="Instagram" data-type="likes" data-amount="15">Acheter 5K</button>
-          <button class="order-btn w-full rounded-xl px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white"
-                  data-pack="Instagram Likes 10K" data-platform="Instagram" data-type="likes" data-amount="25">Acheter 10K</button>
-        </div>
-        <p class="mt-3 text-xs text-slate-400">Délais : 24–48h</p>
+      <div class="mt-6 flex flex-wrap items-center gap-3">
+        <a id="waBtn" href="#" target="_blank" rel="noopener" class="rounded-xl bg-green-600 hover:bg-green-500 text-white px-4 py-2">Ouvrir WhatsApp</a>
+        <a href="/" class="rounded-xl border border-slate-700 px-4 py-2">Retour aux packs</a>
       </div>
 
-      <!-- TikTok Followers -->
-      <div class="bg-slate-900/70 border border-slate-800 rounded-2xl p-6 text-center">
-        <h4 class="text-lg font-semibold text-white mb-2">TikTok Followers</h4>
-        <ul class="text-slate-300 space-y-1 mb-4">
-          <li>1K → 15€</li>
-          <li>5K → 65€</li>
-          <li>10K → 120€</li>
-        </ul>
-        <div class="space-y-2">
-          <button class="order-btn w-full rounded-xl px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white"
-                  data-pack="TikTok Followers 1K" data-platform="TikTok" data-type="followers" data-amount="15">Acheter 1K</button>
-          <button class="order-btn w-full rounded-xl px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white"
-                  data-pack="TikTok Followers 5K" data-platform="TikTok" data-type="followers" data-amount="65">Acheter 5K</button>
-          <button class="order-btn w-full rounded-xl px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white"
-                  data-pack="TikTok Followers 10K" data-platform="TikTok" data-type="followers" data-amount="120">Acheter 10K</button>
-        </div>
-        <p class="mt-3 text-xs text-slate-400">Délais : 24–48h</p>
-      </div>
+      <p class="text-slate-400 text-xs mt-4">Astuce : si WhatsApp ne s’ouvre pas, copiez/collez le récap dans votre conversation.</p>
     </div>
-  </section>
-
-  <!-- PACKS COMBINÉS (nouvelle section) -->
-  <section class="max-w-6xl mx-auto px-6 pb-12">
-    <h3 class="text-2xl font-bold text-white mb-6"> Packs combinés – Abonnés + Likes</h3>
-
-    <div class="grid gap-6 md:grid-cols-3">
-      <!-- STARTER -->
-      <div class="rounded-2xl p-6 text-center border border-slate-800 bg-gradient-to-b from-indigo-900/30 to-blue-900/20">
-        <p class="text-sm font-semibold tracking-wide text-indigo-300">PACK STARTER</p>
-        <div class="mt-3 text-4xl font-extrabold text-white">1 000</div>
-        <p class="text-slate-300 -mt-1">abonnés</p>
-        <div class="mt-2 text-4xl font-extrabold text-white">1 000</div>
-        <p class="text-slate-300 -mt-1">likes</p>
-        <p class="mt-4 text-slate-400 text-sm">Avantage Pack</p>
-        <div class="mt-1 text-3xl font-bold text-white">18 €</div>
-
-        <button
-          class="order-btn w-full mt-4 rounded-xl px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white"
-          data-pack="Pack Starter (1K abonnés + 1K likes)"
-          data-platform="Instagram"
-          data-type="combo"
-          data-amount="18">
-          Choisir ce pack
-        </button>
-      </div>
-
-      <!-- BOOST -->
-      <div class="rounded-2xl p-6 text-center border border-slate-800 bg-gradient-to-b from-indigo-900/30 to-blue-900/20">
-        <p class="text-sm font-semibold tracking-wide text-indigo-300">PACK BOOST</p>
-        <div class="mt-3 text-4xl font-extrabold text-white">5 000</div>
-        <p class="text-slate-300 -mt-1">abonnés</p>
-        <div class="mt-2 text-4xl font-extrabold text-white">5 000</div>
-        <p class="text-slate-300 -mt-1">likes</p>
-        <p class="mt-4 text-slate-400 text-sm">Avantage Pack</p>
-        <div class="mt-1 text-3xl font-bold text-white">75 €</div>
-
-        <button
-          class="order-btn w-full mt-4 rounded-xl px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white"
-          data-pack="Pack Boost (5K abonnés + 5K likes)"
-          data-platform="Instagram"
-          data-type="combo"
-          data-amount="75">
-          Choisir ce pack
-        </button>
-      </div>
-
-      <!-- PREMIUM -->
-      <div class="rounded-2xl p-6 text-center border border-slate-800 bg-gradient-to-b from-indigo-900/30 to-blue-900/20">
-        <p class="text-sm font-semibold tracking-wide text-indigo-300">PACK PREMIUM</p>
-        <div class="mt-3 text-4xl font-extrabold text-white">10 000</div>
-        <p class="text-slate-300 -mt-1">abonnés</p>
-        <div class="mt-2 text-4xl font-extrabold text-white">10 000</div>
-        <p class="text-slate-300 -mt-1">likes</p>
-        <p class="mt-4 text-slate-400 text-sm">Avantage Pack</p>
-        <div class="mt-1 text-3xl font-bold text-white">135 €</div>
-
-        <button
-          class="order-btn w-full mt-4 rounded-xl px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white"
-          data-pack="Pack Premium (10K abonnés + 10K likes)"
-          data-platform="Instagram"
-          data-type="combo"
-          data-amount="135">
-          Choisir ce pack
-        </button>
-      </div>
-    </div>
-  </section>
-
-  <!-- MODAL FORM -->
-  <div id="modal" class="fixed inset-0 hidden items-center justify-center bg-black/70 p-4">
-    <div class="w-full max-w-md rounded-2xl bg-slate-900 border border-slate-800 p-6">
-      <h3 class="text-xl font-bold text-white">Infos nécessaires</h3>
-      <p class="text-slate-400 text-sm mt-1">Renseigne ton pseudo et (si likes) le lien du post.</p>
-
-      <form id="orderForm" class="mt-4 space-y-3">
-        <input type="hidden" id="pack" name="pack">
-        <input type="hidden" id="platform" name="platform">
-        <input type="hidden" id="type" name="type">
-        <input type="hidden" id="amount" name="amount">
-
-        <div>
-          <label class="block text-sm mb-1">Pseudo (sans @)</label>
-          <input id="handle" required class="w-full rounded-lg bg-slate-800 border border-slate-700 px-3 py-2" placeholder="ex: moncompte.ig">
-        </div>
-
-        <div>
-          <label class="block text-sm mb-1">Lien du post (si likes/combos)</label>
-          <input id="postLink" class="w-full rounded-lg bg-slate-800 border border-slate-700 px-3 py-2" placeholder="https://instagram.com/p/...">
-        </div>
-
-        <div>
-          <label class="block text-sm mb-1">Email (reçu de commande)</label>
-          <input id="email" type="email" required class="w-full rounded-lg bg-slate-800 border border-slate-700 px-3 py-2" placeholder="ton@email.com">
-        </div>
-
-        <div class="flex gap-3 pt-2">
-          <button type="button" id="cancelBtn" class="flex-1 rounded-xl border border-slate-700 px-4 py-2">Annuler</button>
-          <button type="submit" class="flex-1 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2">Valider & Payer</button>
-        </div>
-      </form>
-    </div>
-  </div>
+  </main>
 
   <footer class="text-center text-slate-500 text-sm py-10">© 2025 BoosterX Media — Visibilité sans effort, résultats garantis.</footer>
 
   <script>
-    const PAYPAL_HANDLE = "FlorianDemaison615"; // ton PayPal.Me
-    const WHATSAPP_NUMBER = "33770111399";      // ton WhatsApp (format international SANS +)
+    const WHATSAPP_NUMBER = "33770111399";
 
-    const modal = document.getElementById('modal');
-    const form = document.getElementById('orderForm');
+    function loadRecap(){
+      const box = document.getElementById('recap');
+      const raw = sessionStorage.getItem('bx_last_order');
+      let html = '';
+      let waUrl = `https://wa.me/${WHATSAPP_NUMBER}`;
 
-    // Ouvrir le formulaire avec les infos du pack
-    document.querySelectorAll('.order-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.getElementById('pack').value = btn.dataset.pack;
-        document.getElementById('platform').value = btn.dataset.platform;
-        document.getElementById('type').value = btn.dataset.type; // followers | likes | combo
-        document.getElementById('amount').value = btn.dataset.amount;
+      if(raw){
+        try{
+          const o = JSON.parse(raw);
+          const msg = encodeURIComponent(
+`Nouvelle commande BoosterX ✅
+Pack : ${o.pack}
+Plateforme : ${o.platform}
+Type : ${o.type}
+Montant : ${o.amount}€
+Pseudo : ${o.handle}
+Lien du post : ${o.postLink || '—'}
+Email : ${o.email}`
+          );
+          waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
 
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
-      });
-    });
-
-    // Fermer
-    document.getElementById('cancelBtn').onclick = () => {
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
-      form.reset();
-    };
-
-    // Soumission : ouvre PayPal + envoie un message WhatsApp avec toutes les infos
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-
-      const pack = document.getElementById('pack').value;
-      const platform = document.getElementById('platform').value;
-      const type = document.getElementById('type').value; // followers | likes | combo
-      const amount = document.getElementById('amount').value;
-      const handle = document.getElementById('handle').value.trim();
-      const postLink = document.getElementById('postLink').value.trim();
-      const email = document.getElementById('email').value.trim();
-
-      if (!handle) { alert("Merci d’indiquer ton pseudo."); return; }
-      if ((type === 'likes' || type === 'combo') && !postLink) { 
-        alert("Merci d’indiquer le lien du post (requis pour les likes/combos)."); 
-        return; 
+          html = `
+            <div><span class="text-slate-400">Pack :</span> <span class="text-white font-semibold">${o.pack}</span></div>
+            <div><span class="text-slate-400">Plateforme :</span> <span class="text-white">${o.platform}</span></div>
+            <div><span class="text-slate-400">Type :</span> <span class="text-white">${o.type}</span></div>
+            <div><span class="text-slate-400">Montant :</span> <span class="text-white">${o.amount} €</span></div>
+            <div><span class="text-slate-400">Pseudo :</span> <span class="text-white">${o.handle}</span></div>
+            <div><span class="text-slate-400">Lien du post :</span> <a class="text-indigo-300 underline break-words" href="${o.postLink || '#'}" target="_blank" rel="noopener">${o.postLink || '—'}</a></div>
+            <div><span class="text-slate-400">Email :</span> <span class="text-white">${o.email}</span></div>
+          `;
+        }catch(e){
+          html = `<div class="text-slate-300">Impossible de charger le récap. Revenez aux packs et relancez la commande.</div>`;
+        }
+      } else {
+        html = `<div class="text-slate-300">Aucune commande récente trouvée. Revenez aux packs et validez un pack.</div>`;
       }
 
-      // 1) Payer sur PayPal.Me
-      const paypalUrl = `https://paypal.me/${PAYPAL_HANDLE}/${amount}`;
-      window.open(paypalUrl, '_blank');
+      box.innerHTML = html;
+      document.getElementById('waBtn').href = waUrl;
+    }
 
-      // 2) Message WhatsApp avec les infos
-      const msg = encodeURIComponent(
-`Nouvelle commande BoosterX ✅
-Pack : ${pack}
-Plateforme : ${platform}
-Type : ${type}
-Montant : ${amount}€
-Pseudo : ${handle}
-Lien du post : ${postLink || '—'}
-Email : ${email}`
-      );
-      const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
-      window.open(waUrl, '_blank');
-
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
-      form.reset();
-      alert("Parfait ! Paiement ouvert et message WhatsApp pré-rempli envoyé ✅");
-    });
+    loadRecap();
   </script>
 </body>
 </html>
