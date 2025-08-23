@@ -12,7 +12,7 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'G-YE1X6FCZ5F');
+    gtag('config', ‘G-YE1X6FCZ5F');
   </script>
 
   <script src="https://cdn.tailwindcss.com"></script>
@@ -32,13 +32,8 @@
 
   <!-- PACKS CLASSIQUES -->
   <section class="max-w-6xl mx-auto px-6 pb-6">
-    <!-- Titre avec halo -->
-    <div class="relative inline-block">
-      <span class="absolute -inset-2 rounded-lg bg-gradient-to-tr from-pink-500 via-fuchsia-500 to-orange-400 opacity-40 blur-md"></span>
-      <h3 class="relative text-2xl font-bold text-white mb-6 px-2"> Nos Packs</h3>
-    </div>
-
-    <div class="grid gap-6 md:grid-cols-3 mt-4">
+    <h3 class="text-2xl font-bold text-white mb-6"> Nos Packs</h3>
+    <div class="grid gap-6 md:grid-cols-3">
       <!-- IG Followers -->
       <div class="bg-slate-900/70 border border-slate-800 rounded-2xl p-6 text-center">
         <h4 class="text-lg font-semibold text-white mb-2">Instagram Followers</h4>
@@ -103,13 +98,9 @@
 
   <!-- PACKS COMBINÉS -->
   <section class="max-w-6xl mx-auto px-6 pb-12">
-    <!-- Titre avec halo -->
-    <div class="relative inline-block">
-      <span class="absolute -inset-2 rounded-lg bg-gradient-to-tr from-cyan-400 via-fuchsia-500 to-red-500 opacity-40 blur-md"></span>
-      <h3 class="relative text-2xl font-bold text-white mb-6 px-2"> Packs combinés – Abonnés + Likes</h3>
-    </div>
+    <h3 class="text-2xl font-bold text-white mb-6"> Packs combinés – Abonnés + Likes</h3>
 
-    <div class="grid gap-6 md:grid-cols-3 mt-4">
+    <div class="grid gap-6 md:grid-cols-3">
       <!-- STARTER -->
       <div class="rounded-2xl p-6 text-center border border-slate-800 bg-gradient-to-b from-indigo-900/30 to-blue-900/20">
         <p class="text-sm font-semibold tracking-wide text-indigo-300">PACK STARTER</p>
@@ -215,7 +206,7 @@
     <button id="hintClose" class="text-slate-400 text-xs ml-1">Fermer</button>
   </div>
 
-  <!-- FOOTER avec logos Instagram + TikTok -->
+  <!-- FOOTER avec logos Instagram + TikTok (améliorés) -->
   <footer class="text-center text-slate-500 text-sm py-10">
     <div class="flex items-center justify-center gap-6 mb-3">
 
@@ -229,8 +220,11 @@
         class="group relative inline-flex items-center justify-center w-12 h-12"
         title="Suivez-nous sur Instagram"
       >
+        <!-- halo -->
         <span class="absolute inset-0 rounded-full bg-gradient-to-tr from-pink-500 via-fuchsia-500 to-orange-400 opacity-60 blur-[8px] group-hover:opacity-90 transition"></span>
+        <!-- pastille -->
         <span class="relative inline-flex items-center justify-center w-12 h-12 rounded-full bg-slate-900/80 border border-slate-700 group-hover:border-pink-400 transition">
+          <!-- SVG Instagram : fond dégradé + pictogramme blanc bien visible -->
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="26" height="26" aria-hidden="true">
             <defs>
               <linearGradient id="ig_fill" x1="0%" y1="100%" x2="100%" y2="0%">
@@ -240,7 +234,9 @@
                 <stop offset="100%" stop-color="#515BD4"/>
               </linearGradient>
             </defs>
+            <!-- fond arrondi -->
             <rect x="56" y="56" width="400" height="400" rx="100" fill="url(#ig_fill)"/>
+            <!-- pictogramme blanc -->
             <path fill="#fff" d="M256 176c-44.1 0-80 35.9-80 80s35.9 80 80 80 80-35.9 80-80-35.9-80-80-80zm0 128c-26.5 0-48-21.5-48-48s21.5-48 48-48 48 21.5 48 48-21.5 48-48 48zm101.6-141.6c0 10.7-8.7 19.6-19.6 19.6-10.7 0-19.6-8.9-19.6-19.6s8.9-19.6 19.6-19.6 19.6 8.7 19.6 19.6zM352 416H160c-35.3 0-64-28.7-64-64V160c0-35.3 28.7-64 64-64h192c35.3 0 64 28.7 64 64v192c0 35.3-28.7 64-64 64zm32-256c0-17.6-14.4-32-32-32H160c-17.6 0-32 14.4-32 32v192c0 17.6 14.4 32 32 32h192c17.6 0 32-14.4 32-32V160z"/>
           </svg>
         </span>
@@ -256,8 +252,11 @@
         class="group relative inline-flex items-center justify-center w-12 h-12"
         title="Suivez-nous sur TikTok"
       >
+        <!-- halo -->
         <span class="absolute inset-0 rounded-full bg-gradient-to-tr from-cyan-400 via-fuchsia-500 to-red-500 opacity-60 blur-[8px] group-hover:opacity-90 transition"></span>
+        <!-- pastille -->
         <span class="relative inline-flex items-center justify-center w-12 h-12 rounded-full bg-slate-900/80 border border-slate-700 group-hover:border-red-400 transition">
+          <!-- SVG TikTok blanc (lisible sur fond sombre) -->
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="24" height="24" aria-hidden="true">
             <path fill="#ffffff" d="M448,209.9a210.1,210.1,0,0,1-122.7-39.2V346.7A165.3,165.3,0,1,1,222.2,182v83.6a82.1,82.1,0,1,0,57.1,78.4V0h82.1A210.4,210.4,0,0,0,448,112.1Z"/>
           </svg>
