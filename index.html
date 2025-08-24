@@ -12,29 +12,51 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){ dataLayer.push(arguments); }
     gtag('js', new Date());
-    gtag('config', 'G-YE1X6FCZ5F'); /* quotes corrigées */
+    gtag('config', 'G-YE1X6FCZ5F');
   </script>
 
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-180.png">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="BoosterX Media — Visibilité sans effort, résultats garantis.">
+  <meta property="og:description" content="Boostez vos abonnés et likes Instagram & TikTok. Livraison 24–48h. Paiement PayPal.">
+  <meta property="og:image" content="/og/boosterx-1200x630.png">
+  <meta property="og:url" content="https://boosterx-media.com">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="BoosterX Media — Visibilité sans effort, résultats garantis.">
+  <meta name="twitter:description" content="Boostez vos abonnés et likes Instagram & TikTok. Livraison 24–48h. Paiement PayPal.">
+  <meta name="twitter:image" content="/og/boosterx-1200x630.png">
 </head>
 <body class="bg-slate-950 text-slate-200 min-h-screen">
+
   <!-- HEADER -->
-  <header class="flex items-center justify-between max-w-6xl mx-auto px-6 py-5">
-    <!-- LOGO GRAND AVEC HALO ANIMÉ -->
-    <a id="bx-logo-link" href="/" class="relative inline-flex items-center justify-center group" aria-label="Accueil BoosterX Media" title="BoosterX Media">
-      <!-- halo animé -->
-      <span class="absolute w-80 h-80 rounded-full bg-gradient-to-r from-fuchsia-500 via-indigo-500 to-cyan-400 opacity-40 blur-3xl animate-pulse group-hover:opacity-70 transition"></span>
+  <header class="flex flex-col items-center justify-center max-w-6xl mx-auto px-6 pt-8 pb-4">
+    <a id="bx-logo-link" href="/" class="relative group inline-flex items-center justify-center" aria-label="Accueil BoosterX Media" title="BoosterX Media">
+      <!-- halo -->
+      <span class="absolute w-56 h-56 rounded-full bg-gradient-to-r from-fuchsia-500 via-indigo-500 to-cyan-400 opacity-30 blur-2xl animate-pulse group-hover:opacity-60 transition"></span>
       <!-- logo -->
-      <img
-        src="/images/logo-transparent-1024.png"
-        alt="Logo BoosterX Media"
-        class="relative w-72 h-auto drop-shadow-[0_0_40px_rgba(139,92,246,0.65)]"
-        width="288" height="288"
-        decoding="async" loading="eager">
+      <img src="/images/logo-transparent-1024.png"
+           alt="Logo BoosterX Media"
+           class="relative w-40 h-auto drop-shadow-[0_0_25px_rgba(139,92,246,0.55)]">
     </a>
 
-    <!-- Bouton WhatsApp (header) -->
-    <a href="https://wa.me/33770111399" class="rounded-xl px-4 py-2 bg-green-600 hover:bg-green-500 text-white">WhatsApp</a>
+    <!-- Texte sous logo -->
+    <h1 class="mt-3 text-3xl font-extrabold tracking-wide text-white">BOOSTERX</h1>
+
+    <!-- Bouton WhatsApp -->
+    <a href="https://wa.me/33770111399"
+       class="mt-4 rounded-xl px-6 py-2.5 bg-green-600 hover:bg-green-500 text-white font-semibold shadow-lg">
+       WhatsApp
+    </a>
   </header>
 
   <!-- HERO -->
@@ -47,6 +69,7 @@
   <section class="max-w-6xl mx-auto px-6 pb-6">
     <h3 class="text-2xl font-bold text-white mb-6"> Nos Packs</h3>
     <div class="grid gap-6 md:grid-cols-3">
+
       <!-- IG Followers -->
       <div class="bg-slate-900/70 border border-slate-800 rounded-2xl p-6 text-center">
         <h4 class="text-lg font-semibold text-white mb-2">Instagram Followers</h4>
@@ -176,209 +199,23 @@
     </div>
   </section>
 
-  <!-- MODAL FORM -->
-  <div id="modal" class="fixed inset-0 hidden items-center justify-center bg-black/70 p-4">
-    <div class="w-full max-w-md rounded-2xl bg-slate-900 border border-slate-800 p-6">
-      <h3 class="text-xl font-bold text-white">Infos nécessaires</h3>
-      <p class="text-slate-400 text-sm mt-1">Renseigne ton pseudo et (si likes/combos) le lien du post.</p>
-
-      <form id="orderForm" class="mt-4 space-y-3">
-        <input type="hidden" id="pack" name="pack">
-        <input type="hidden" id="platform" name="platform">
-        <input type="hidden" id="type" name="type">
-        <input type="hidden" id="amount" name="amount">
-
-        <div>
-          <label class="block text-sm mb-1">Pseudo (sans @)</label>
-          <input id="handle" required class="w-full rounded-lg bg-slate-800 border border-slate-700 px-3 py-2" placeholder="ex: moncompte.ig">
-        </div>
-
-        <div>
-          <label class="block text-sm mb-1">Lien du post (si likes/combos)</label>
-          <input id="postLink" class="w-full rounded-lg bg-slate-800 border border-slate-700 px-3 py-2" placeholder="https://instagram.com/p/...">
-        </div>
-
-        <div>
-          <label class="block text-sm mb-1">Email (reçu de commande)</label>
-          <input id="email" type="email" required class="w-full rounded-lg bg-slate-800 border border-slate-700 px-3 py-2" placeholder="ton@email.com">
-        </div>
-
-        <div class="flex gap-3 pt-2">
-          <button type="button" id="cancelBtn" class="flex-1 rounded-xl border border-slate-700 px-4 py-2">Annuler</button>
-          <button type="submit" class="flex-1 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2">Valider & Payer</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- BANNIÈRE (WhatsApp + Confirmation) -->
-  <div id="hintBar" class="hidden fixed bottom-4 left-1/2 -translate-x-1/2 z-50 bg-slate-900 border border-slate-700 text-slate-200 rounded-xl px-4 py-3 shadow-xl items-center gap-3">
-    <span class="text-sm">Après le paiement :</span>
-    <a id="hintWa" href="#" target="_blank" rel="noopener" class="rounded-lg bg-green-600 hover:bg-green-500 text-white text-sm px-3 py-1">Ouvrir WhatsApp</a>
-    <a id="hintMerci" href="#" class="text-indigo-300 underline text-xs ml-1">Aller à la confirmation</a>
-    <button id="hintClose" class="text-slate-400 text-xs ml-1">Fermer</button>
-  </div>
-
-  <!-- FOOTER : Brand + WhatsApp + Instagram + TikTok (même style/icônes) -->
+  <!-- FOOTER -->
   <footer class="text-center text-slate-500 text-sm py-10">
     <div class="flex items-center justify-center gap-6 mb-3">
-      <!-- Logo BoosterX (halo animé) -->
+      <!-- Logo BoosterX -->
       <a href="/" aria-label="Retour accueil BoosterX Media"
          class="relative group inline-flex items-center justify-center w-12 h-12"
          title="BoosterX Media">
         <span class="absolute w-16 h-16 rounded-full bg-gradient-to-r from-fuchsia-500 via-indigo-500 to-cyan-400 opacity-40 blur-lg animate-pulse group-hover:opacity-70 transition"></span>
         <span class="relative inline-flex items-center justify-center w-12 h-12 rounded-full bg-slate-900/80 border border-slate-700 group-hover:border-indigo-400 transition overflow-hidden">
-          <img src="/images/logo-transparent-256.png" alt="Logo BoosterX Media" class="w-7 h-7" width="28" height="28" loading="lazy" decoding="async">
+          <img src="/images/logo-transparent-256.png" alt="Logo BoosterX Media" class="w-7 h-7">
         </span>
       </a>
 
       <!-- WhatsApp -->
-      <a id="wa-link-footer" href="https://wa.me/33770111399" target="_blank" rel="noopener"
-         aria-label="Ouvrir WhatsApp BoosterX Media"
-         class="group relative inline-flex items-center justify-center w-12 h-12" title="Nous écrire sur WhatsApp">
+      <a href="https://wa.me/33770111399" target="_blank" rel="noopener"
+         class="group relative inline-flex items-center justify-center w-12 h-12">
         <span class="absolute inset-0 rounded-full bg-green-500 opacity-60 blur-[8px] group-hover:opacity-90 transition"></span>
         <span class="relative inline-flex items-center justify-center w-12 h-12 rounded-full bg-slate-900/80 border border-slate-700 group-hover:border-green-400 transition">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="24" height="24" aria-hidden="true">
-            <path fill="#ffffff" d="M380.9 97.1C339 55.1 283.2 32 224.8 32 106.1 32 9.8 128.3 9.8 247.1c0 42.8 11.2 84.6 32.6 121.3L0 480l114.6-41.9c35.9 19.6 76.3 29.9 117.9 29.9h.1c118.7 0 215-96.3 215-215.1 0-58.3-22.7-113.1-67.7-156.8zM224.7 438.7h-.1c-36.9 0-73.2-9.9-104.8-28.6l-7.5-4.5-68 24.8 23.1-69-4.9-7.7c-20.6-32.5-31.5-70-31.5-108.5 0-112.6 91.6-204.2 204.2-204.2 54.5 0 105.8 21.2 144.3 59.7 38.5 38.5 59.7 89.8 59.7 144.3 0 112.6-91.6 204.2-204.5 204.2zm115.6-146.5c-6.3-3.1-37.4-18.4-43.1-20.5-5.8-2.1-10-3.1-14.2 3.1-4.2 6.3-16.3 20.5-20 24.8-3.7 4.2-7.4 4.7-13.7 1.6-6.3-3.1-26.5-9.8-50.5-31.2-18.6-16.5-31.1-36.9-34.8-43.1-3.7-6.3-.4-9.7 2.8-12.8 2.9-2.9 6.3-7.4 9.4-11.1 3.1-3.7 4.2-6.3 6.3-10.5 2.1-4.2 1-7.9-.5-11-1.6-3.1-14.2-34.3-19.5-47-5.1-12.3-10.3-10.6-14.2-10.8-3.7-.2-8-.2-12.2-.2s-11.1 1.6-16.9 7.9c-5.8 6.3-22.2 21.7-22.2 52.9s22.8 61.4 26 65.7c3.1 4.2 44.9 68.5 108.8 96.1 15.2 6.6 27.1 10.5 36.4 13.4 15.3 4.9 29.2 4.2 40.2 2.6 12.3-1.8 37.4-15.3 42.7-30.1 5.3-14.8 5.3-27.5 3.7-30.1-1.6-2.6-5.8-4.2-12.1-7.4z"/>
-          </svg>
-        </span>
-      </a>
-
-      <!-- Instagram -->
-      <a id="ig-link-footer"
-         href="https://www.instagram.com/boosterx_media?igsh=MXc0ejdzb3Y0Ymg0bg%3D%3D&utm_source=qr"
-         target="_blank" rel="noopener"
-         class="group relative inline-flex items-center justify-center w-12 h-12">
-        <span class="absolute inset-0 rounded-full bg-gradient-to-tr from-pink-500 via-fuchsia-500 to-orange-400 opacity-60 blur-[8px] group-hover:opacity-90 transition"></span>
-        <span class="relative inline-flex items-center justify-center w-12 h-12 rounded-full bg-slate-900/80 border border-slate-700 group-hover:border-pink-400 transition">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="26" height="26" aria-hidden="true">
-            <defs>
-              <linearGradient id="ig_fill_foot" x1="0%" y1="100%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#F58529"/><stop offset="35%" stop-color="#DD2A7B"/>
-                <stop offset="70%" stop-color="#8134AF"/><stop offset="100%" stop-color="#515BD4"/>
-              </linearGradient>
-            </defs>
-            <rect x="56" y="56" width="400" height="400" rx="100" fill="url(#ig_fill_foot)"/>
-            <path fill="#fff" d="M256 176c-44.1 0-80 35.9-80 80s35.9 80 80 80 80-35.9 80-80-35.9-80-80-80zm0 128c-26.5 0-48-21.5-48-48s21.5-48 48-48 48 21.5 48 48-21.5 48-48 48zm101.6-141.6c0 10.7-8.7 19.6-19.6 19.6-10.7 0-19.6-8.9-19.6-19.6s8.9-19.6 19.6-19.6 19.6 8.7 19.6 19.6zM352 416H160c-35.3 0-64-28.7-64-64V160c0-35.3 28.7-64 64-64h192c35.3 0 64 28.7 64 64v192c0 35.3-28.7 64-64 64zm32-256c0-17.6-14.4-32-32-32H160c-17.6 0-32 14.4-32 32v192c0 17.6 14.4 32 32 32h192c17.6 0 32-14.4 32-32V160z"/>
-          </svg>
-        </span>
-      </a>
-
-      <!-- TikTok -->
-      <a id="tt-link-footer"
-         href="https://www.tiktok.com/@boosterxmedia?_t=ZN-8z3kqKU9w0M&_r=1"
-         target="_blank" rel="noopener"
-         class="group relative inline-flex items-center justify-center w-12 h-12">
-        <span class="absolute inset-0 rounded-full bg-gradient-to-tr from-cyan-400 via-fuchsia-500 to-red-500 opacity-60 blur-[8px] group-hover:opacity-90 transition"></span>
-        <span class="relative inline-flex items-center justify-center w-12 h-12 rounded-full bg-slate-900/80 border border-slate-700 group-hover:border-red-400 transition">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="24" height="24" aria-hidden="true">
-            <path fill="#ffffff" d="M448,209.9a210.1,210.1,0,0,1-122.7-39.2V346.7A165.3,165.3,0,1,1,222.2,182v83.6a82.1,82.1,0,1,0,57.1,78.4V0h82.1A210.4,210.4,0,0,0,448,112.1Z"/>
-          </svg>
-        </span>
-      </a>
-    </div>
-    © 2025 BoosterX Media — Visibilité sans effort, résultats garantis.
-  </footer>
-
-  <script>
-    const PAYPAL_HANDLE = "FlorianDemaison615";
-    const WHATSAPP_NUMBER = "33770111399";
-
-    const modal = document.getElementById('modal');
-    const form = document.getElementById('orderForm');
-
-    // Ouvrir le formulaire avec les infos du pack
-    document.querySelectorAll('.order-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.getElementById('pack').value     = btn.dataset.pack;
-        document.getElementById('platform').value = btn.dataset.platform;
-        document.getElementById('type').value     = btn.dataset.type; // followers | likes | combo
-        document.getElementById('amount').value   = btn.dataset.amount;
-
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
-      });
-    });
-
-    // Fermer
-    const cancelBtn = document.getElementById('cancelBtn');
-    if (cancelBtn) {
-      cancelBtn.onclick = () => {
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
-        form.reset();
-      };
-    }
-
-    // Submit : redirection PayPal (même onglet) + bannière avec liens prêts
-    if (form) {
-      form.addEventListener('submit', (e) => {
-        e.preventDefault();
-
-        const pack     = document.getElementById('pack').value;
-        const platform = document.getElementById('platform').value;
-        const type     = document.getElementById('type').value;
-        const amount   = document.getElementById('amount').value;
-        const handle   = document.getElementById('handle').value.trim();
-        const postLink = document.getElementById('postLink').value.trim();
-        const email    = document.getElementById('email').value.trim();
-
-        if (!handle) { alert("Merci d’indiquer ton pseudo."); return; }
-        if ((type === 'likes' || type === 'combo') && !postLink) {
-          alert("Merci d’indiquer le lien du post (requis pour les likes/combos)."); return;
-        }
-
-        // Query params pour merci + message WhatsApp
-        const qp = new URLSearchParams({ pack, platform, type, amount, handle, post: postLink || '', email }).toString();
-
-        const waMsg = encodeURIComponent(
-`Nouvelle commande BoosterX ✅
-Pack : ${pack}
-Plateforme : ${platform}
-Type : ${type}
-Montant : ${amount}€
-Pseudo : ${handle}
-Lien du post : ${postLink || '—'}
-Email : ${email}`
-        );
-        const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${waMsg}`;
-        const merciUrl = `merci.html?${qp}`; // 👈 RELATIF (fix GitHub Pages)
-
-        // Sauvegarde simple (fallback si l'utilisateur va sur merci sans params)
-        sessionStorage.setItem('bx_last_order', JSON.stringify({ pack, platform, type, amount, handle, postLink, email }));
-        sessionStorage.setItem('bx_last_wa', waUrl);
-
-        // Affiche la bannière avec liens utiles
-        const bar = document.getElementById('hintBar');
-        if (bar) {
-          document.getElementById('hintWa').href = waUrl;
-          document.getElementById('hintMerci').href = merciUrl;
-          bar.classList.remove('hidden'); bar.classList.add('flex');
-          document.getElementById('hintClose').onclick = ()=> bar.classList.add('hidden');
-        }
-
-        // Redirection PayPal dans le même onglet (iOS friendly)
-        const paypalUrl = `https://paypal.me/${PAYPAL_HANDLE}/${encodeURIComponent(amount)}`;
-        window.location.href = paypalUrl;
-
-        // Ferme le modal
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
-        form.reset();
-      });
-    }
-
-    // Tracking GA4: logo + socials (footer)
-    document.addEventListener('DOMContentLoaded', () => {
-      ['bx-logo-link','ig-link-footer','tt-link-footer','wa-link-footer'].forEach(id=>{
-        const el = document.getElementById(id);
-        if (el && typeof gtag === 'function') {
-          el.addEventListener('click', () => {
-            gtag('event','click',{ event_category:'navigation', event_label:id, link_url:el.href || '/' });
-          });
-        }
-      });
-    });
-  </script>
-</body>
-</html>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="24" height="24" fill="#fff">
+            <path d="M380.9 97.1C339 55.1 283.2 32 224.8 32 106.1 32 9.8 128.3 9.8 247.1c0 42.8 11.2 84.6 32.6 121.3L0 480l114.6-41.9c35.9 19.6 76.3 29.9 117.9 29.9h.1c118.7 0 215-96.3 215-215.1 0-58.3-22.7-113.1-67.7-156.8zM224.7 438.7h-.1c-36.9 0-73.2-9.9-104.8-28.6l-7.5-4.5-68 24.8 23.1-69-4.9-7.7c-20.6-32.5-31.5-70-31.5-108.5 0-112.6 91.6-204.2 204.2-204.2 54.5 0 105.8 21.2 144.3 59.7 38.5 38.5 59.7 89.8 59.7 144.3 0 112.6-91.6 204.2-204.5 204.2zm115.6-146.5c-6.3-3.1-37.4-18.4-43.1-20.5-5.8-2.1-10-3.1-14.2 3.1-4.2 6.3-16.3 20.5-20 24.8-3.7 4.2-7.4 4.7-13.7 1.6-6.3-3.1-26.5-9.8-50.5-31.2-18.6-16.5-31.1-36.9-34.8-43.1-3.7-6.3-.4-9.7 2.8-12.8 2.9-2.9 6.3-7.4 9.4-11.1 3.1-3.7 4.2-6.3 6.3
