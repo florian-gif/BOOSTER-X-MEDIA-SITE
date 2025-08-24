@@ -10,9 +10,9 @@
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-YE1X6FCZ5F"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+    function gtag(){ dataLayer.push(arguments); }
     gtag('js', new Date());
-    gtag('config', 'G-YE1X6FCZ5F'); /* correction des guillemets */
+    gtag('config', 'G-YE1X6FCZ5F'); /* quotes corrigées */
   </script>
 
   <script src="https://cdn.tailwindcss.com"></script>
@@ -20,17 +20,20 @@
 <body class="bg-slate-950 text-slate-200 min-h-screen">
   <!-- HEADER -->
   <header class="flex items-center justify-between max-w-6xl mx-auto px-6 py-5">
-    <!-- LOGO GRAND (fond transparent) -->
-    <a id="bx-logo-link" href="/" class="inline-flex items-center" aria-label="Accueil BoosterX Media" title="BoosterX Media">
+    <!-- LOGO GRAND AVEC HALO ANIMÉ -->
+    <a id="bx-logo-link" href="/" class="relative inline-flex items-center justify-center group" aria-label="Accueil BoosterX Media" title="BoosterX Media">
+      <!-- halo animé -->
+      <span class="absolute w-80 h-80 rounded-full bg-gradient-to-r from-fuchsia-500 via-indigo-500 to-cyan-400 opacity-40 blur-3xl animate-pulse group-hover:opacity-70 transition"></span>
+      <!-- logo -->
       <img
         src="/images/logo-transparent-1024.png"
         alt="Logo BoosterX Media"
-        class="w-60 h-auto drop-shadow-[0_0_30px_rgba(139,92,246,0.55)]"
-        width="240" height="240"
+        class="relative w-72 h-auto drop-shadow-[0_0_40px_rgba(139,92,246,0.65)]"
+        width="288" height="288"
         decoding="async" loading="eager">
     </a>
 
-    <!-- Bouton WhatsApp (d’origine) -->
+    <!-- Bouton WhatsApp (header) -->
     <a href="https://wa.me/33770111399" class="rounded-xl px-4 py-2 bg-green-600 hover:bg-green-500 text-white">WhatsApp</a>
   </header>
 
@@ -219,25 +222,20 @@
   <!-- FOOTER : Brand + WhatsApp + Instagram + TikTok (même style/icônes) -->
   <footer class="text-center text-slate-500 text-sm py-10">
     <div class="flex items-center justify-center gap-6 mb-3">
-
-      <!-- Logo BoosterX (même format que les icônes) -->
-      <a href="/" aria-label="Retour accueil BoosterX Media" class="group relative inline-flex items-center justify-center w-12 h-12" title="BoosterX Media">
-        <span class="absolute inset-0 rounded-full bg-gradient-to-tr from-fuchsia-500 via-indigo-500 to-cyan-400 opacity-60 blur-[8px] group-hover:opacity-90 transition"></span>
+      <!-- Logo BoosterX (halo animé) -->
+      <a href="/" aria-label="Retour accueil BoosterX Media"
+         class="relative group inline-flex items-center justify-center w-12 h-12"
+         title="BoosterX Media">
+        <span class="absolute w-16 h-16 rounded-full bg-gradient-to-r from-fuchsia-500 via-indigo-500 to-cyan-400 opacity-40 blur-lg animate-pulse group-hover:opacity-70 transition"></span>
         <span class="relative inline-flex items-center justify-center w-12 h-12 rounded-full bg-slate-900/80 border border-slate-700 group-hover:border-indigo-400 transition overflow-hidden">
-          <img src="/images/logo-transparent-1024.png" alt="Logo BoosterX Media" class="w-7 h-7" width="28" height="28" loading="lazy" decoding="async">
+          <img src="/images/logo-transparent-256.png" alt="Logo BoosterX Media" class="w-7 h-7" width="28" height="28" loading="lazy" decoding="async">
         </span>
       </a>
 
       <!-- WhatsApp -->
-      <a
-        id="wa-link-footer"
-        href="https://wa.me/33770111399"
-        target="_blank"
-        rel="noopener"
-        aria-label="Ouvrir WhatsApp BoosterX Media"
-        class="group relative inline-flex items-center justify-center w-12 h-12"
-        title="Nous écrire sur WhatsApp"
-      >
+      <a id="wa-link-footer" href="https://wa.me/33770111399" target="_blank" rel="noopener"
+         aria-label="Ouvrir WhatsApp BoosterX Media"
+         class="group relative inline-flex items-center justify-center w-12 h-12" title="Nous écrire sur WhatsApp">
         <span class="absolute inset-0 rounded-full bg-green-500 opacity-60 blur-[8px] group-hover:opacity-90 transition"></span>
         <span class="relative inline-flex items-center justify-center w-12 h-12 rounded-full bg-slate-900/80 border border-slate-700 group-hover:border-green-400 transition">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="24" height="24" aria-hidden="true">
@@ -247,38 +245,30 @@
       </a>
 
       <!-- Instagram -->
-      <a
-        id="ig-link"
-        href="https://www.instagram.com/boosterx_media?igsh=MXc0ejdzb3Y0Ymg0bg%3D%3D&utm_source=qr"
-        target="_blank" rel="noopener"
-        aria-label="Ouvrir Instagram BoosterX Media"
-        class="group relative inline-flex items-center justify-center w-12 h-12"
-        title="Suivez-nous sur Instagram"
-      >
+      <a id="ig-link-footer"
+         href="https://www.instagram.com/boosterx_media?igsh=MXc0ejdzb3Y0Ymg0bg%3D%3D&utm_source=qr"
+         target="_blank" rel="noopener"
+         class="group relative inline-flex items-center justify-center w-12 h-12">
         <span class="absolute inset-0 rounded-full bg-gradient-to-tr from-pink-500 via-fuchsia-500 to-orange-400 opacity-60 blur-[8px] group-hover:opacity-90 transition"></span>
         <span class="relative inline-flex items-center justify-center w-12 h-12 rounded-full bg-slate-900/80 border border-slate-700 group-hover:border-pink-400 transition">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="26" height="26" aria-hidden="true">
             <defs>
-              <linearGradient id="ig_fill" x1="0%" y1="100%" x2="100%" y2="0%">
+              <linearGradient id="ig_fill_foot" x1="0%" y1="100%" x2="100%" y2="0%">
                 <stop offset="0%" stop-color="#F58529"/><stop offset="35%" stop-color="#DD2A7B"/>
                 <stop offset="70%" stop-color="#8134AF"/><stop offset="100%" stop-color="#515BD4"/>
               </linearGradient>
             </defs>
-            <rect x="56" y="56" width="400" height="400" rx="100" fill="url(#ig_fill)"/>
+            <rect x="56" y="56" width="400" height="400" rx="100" fill="url(#ig_fill_foot)"/>
             <path fill="#fff" d="M256 176c-44.1 0-80 35.9-80 80s35.9 80 80 80 80-35.9 80-80-35.9-80-80-80zm0 128c-26.5 0-48-21.5-48-48s21.5-48 48-48 48 21.5 48 48-21.5 48-48 48zm101.6-141.6c0 10.7-8.7 19.6-19.6 19.6-10.7 0-19.6-8.9-19.6-19.6s8.9-19.6 19.6-19.6 19.6 8.7 19.6 19.6zM352 416H160c-35.3 0-64-28.7-64-64V160c0-35.3 28.7-64 64-64h192c35.3 0 64 28.7 64 64v192c0 35.3-28.7 64-64 64zm32-256c0-17.6-14.4-32-32-32H160c-17.6 0-32 14.4-32 32v192c0 17.6 14.4 32 32 32h192c17.6 0 32-14.4 32-32V160z"/>
           </svg>
         </span>
       </a>
 
       <!-- TikTok -->
-      <a
-        id="tt-link"
-        href="https://www.tiktok.com/@boosterxmedia?_t=ZN-8z3kqKU9w0M&_r=1"
-        target="_blank" rel="noopener"
-        aria-label="Ouvrir TikTok BoosterX Media"
-        class="group relative inline-flex items-center justify-center w-12 h-12"
-        title="Suivez-nous sur TikTok"
-      >
+      <a id="tt-link-footer"
+         href="https://www.tiktok.com/@boosterxmedia?_t=ZN-8z3kqKU9w0M&_r=1"
+         target="_blank" rel="noopener"
+         class="group relative inline-flex items-center justify-center w-12 h-12">
         <span class="absolute inset-0 rounded-full bg-gradient-to-tr from-cyan-400 via-fuchsia-500 to-red-500 opacity-60 blur-[8px] group-hover:opacity-90 transition"></span>
         <span class="relative inline-flex items-center justify-center w-12 h-12 rounded-full bg-slate-900/80 border border-slate-700 group-hover:border-red-400 transition">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="24" height="24" aria-hidden="true">
@@ -311,33 +301,37 @@
     });
 
     // Fermer
-    document.getElementById('cancelBtn').onclick = () => {
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
-      form.reset();
-    };
+    const cancelBtn = document.getElementById('cancelBtn');
+    if (cancelBtn) {
+      cancelBtn.onclick = () => {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        form.reset();
+      };
+    }
 
     // Submit : redirection PayPal (même onglet) + bannière avec liens prêts
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
 
-      const pack     = document.getElementById('pack').value;
-      const platform = document.getElementById('platform').value;
-      const type     = document.getElementById('type').value;
-      const amount   = document.getElementById('amount').value;
-      const handle   = document.getElementById('handle').value.trim();
-      const postLink = document.getElementById('postLink').value.trim();
-      const email    = document.getElementById('email').value.trim();
+        const pack     = document.getElementById('pack').value;
+        const platform = document.getElementById('platform').value;
+        const type     = document.getElementById('type').value;
+        const amount   = document.getElementById('amount').value;
+        const handle   = document.getElementById('handle').value.trim();
+        const postLink = document.getElementById('postLink').value.trim();
+        const email    = document.getElementById('email').value.trim();
 
-      if (!handle) { alert("Merci d’indiquer ton pseudo."); return; }
-      if ((type === 'likes' || type === 'combo') && !postLink) {
-        alert("Merci d’indiquer le lien du post (requis pour les likes/combos)."); return;
-      }
+        if (!handle) { alert("Merci d’indiquer ton pseudo."); return; }
+        if ((type === 'likes' || type === 'combo') && !postLink) {
+          alert("Merci d’indiquer le lien du post (requis pour les likes/combos)."); return;
+        }
 
-      // Query params pour merci + message WhatsApp
-      const qp = new URLSearchParams({ pack, platform, type, amount, handle, post: postLink || '', email }).toString();
+        // Query params pour merci + message WhatsApp
+        const qp = new URLSearchParams({ pack, platform, type, amount, handle, post: postLink || '', email }).toString();
 
-      const waMsg = encodeURIComponent(
+        const waMsg = encodeURIComponent(
 `Nouvelle commande BoosterX ✅
 Pack : ${pack}
 Plateforme : ${platform}
@@ -346,42 +340,41 @@ Montant : ${amount}€
 Pseudo : ${handle}
 Lien du post : ${postLink || '—'}
 Email : ${email}`
-      );
-      const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${waMsg}`;
-      const merciUrl = `merci.html?${qp}`; // 👈 RELATIF (fix GitHub Pages)
+        );
+        const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${waMsg}`;
+        const merciUrl = `merci.html?${qp}`; // 👈 RELATIF (fix GitHub Pages)
 
-      // Sauvegarde simple (fallback si l'utilisateur va sur merci sans params)
-      sessionStorage.setItem('bx_last_order', JSON.stringify({ pack, platform, type, amount, handle, postLink, email }));
-      sessionStorage.setItem('bx_last_wa', waUrl);
+        // Sauvegarde simple (fallback si l'utilisateur va sur merci sans params)
+        sessionStorage.setItem('bx_last_order', JSON.stringify({ pack, platform, type, amount, handle, postLink, email }));
+        sessionStorage.setItem('bx_last_wa', waUrl);
 
-      // Affiche la bannière avec liens utiles
-      const bar = document.getElementById('hintBar');
-      document.getElementById('hintWa').href = waUrl;
-      document.getElementById('hintMerci').href = merciUrl;
-      bar.classList.remove('hidden'); bar.classList.add('flex');
-      document.getElementById('hintClose').onclick = ()=> bar.classList.add('hidden');
+        // Affiche la bannière avec liens utiles
+        const bar = document.getElementById('hintBar');
+        if (bar) {
+          document.getElementById('hintWa').href = waUrl;
+          document.getElementById('hintMerci').href = merciUrl;
+          bar.classList.remove('hidden'); bar.classList.add('flex');
+          document.getElementById('hintClose').onclick = ()=> bar.classList.add('hidden');
+        }
 
-      // Redirection PayPal dans le même onglet (iOS friendly)
-      const paypalUrl = `https://paypal.me/${PAYPAL_HANDLE}/${encodeURIComponent(amount)}`;
-      window.location.href = paypalUrl;
+        // Redirection PayPal dans le même onglet (iOS friendly)
+        const paypalUrl = `https://paypal.me/${PAYPAL_HANDLE}/${encodeURIComponent(amount)}`;
+        window.location.href = paypalUrl;
 
-      // Ferme le modal
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
-      form.reset();
-    });
+        // Ferme le modal
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        form.reset();
+      });
+    }
 
-    // --- Tracking GA4 du clic Instagram & TikTok & WhatsApp & Logo (footer) ---
+    // Tracking GA4: logo + socials (footer)
     document.addEventListener('DOMContentLoaded', () => {
-      ['bx-logo-link','ig-link','tt-link','wa-link-footer'].forEach(id=>{
+      ['bx-logo-link','ig-link-footer','tt-link-footer','wa-link-footer'].forEach(id=>{
         const el = document.getElementById(id);
         if (el && typeof gtag === 'function') {
           el.addEventListener('click', () => {
-            gtag('event', 'click', {
-              event_category: 'outbound',
-              event_label: id,
-              link_url: el.href || '/'
-            });
+            gtag('event','click',{ event_category:'navigation', event_label:id, link_url:el.href || '/' });
           });
         }
       });
