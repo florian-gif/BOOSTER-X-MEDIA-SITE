@@ -33,6 +33,27 @@
   <meta name="twitter:title" content="BoosterX Media — Visibilité sans effort, résultats garantis.">
   <meta name="twitter:description" content="Boostez vos abonnés et likes Instagram & TikTok. Livraison 24–48h. Paiement PayPal.">
   <meta name="twitter:image" content="og/boosterx-1200x630.png">
+
+  <!-- TikTok Pixel Code Start -->
+  <script>
+  !function (w, d, t) {
+    w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];
+    ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"];
+    ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};
+    for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);
+    ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e};
+    ttq.load=function(e,n){
+      var r="https://analytics.tiktok.com/i18n/pixel/events.js";
+      ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};
+      n=document.createElement("script");n.type="text/javascript";n.async=!0;n.src=r+"?sdkid="+e+"&lib="+t;
+      e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)
+    };
+  }(window, document, 'ttq');
+
+  ttq.load('D2NH2U3C77U5B8SR4A30');  /* Ton Pixel ID */
+  ttq.page(); /* PageView */
+  </script>
+  <!-- TikTok Pixel Code End -->
 </head>
 <body class="bg-slate-950 text-slate-200 min-h-screen">
 
@@ -108,7 +129,7 @@
         <div class="space-y-2">
           <button class="order-btn w-full rounded-xl px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white"
                   data-pack="TikTok Followers 1K" data-platform="TikTok" data-type="followers" data-amount="15">Acheter 1K</button>
-        <button class="order-btn w-full rounded-xl px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white"
+          <button class="order-btn w-full rounded-xl px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white"
                   data-pack="TikTok Followers 5K" data-platform="TikTok" data-type="followers" data-amount="65">Acheter 5K</button>
           <button class="order-btn w-full rounded-xl px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white"
                   data-pack="TikTok Followers 10K" data-platform="TikTok" data-type="followers" data-amount="120">Acheter 10K</button>
@@ -271,7 +292,7 @@
               </linearGradient>
             </defs>
             <rect x="56" y="56" width="400" height="400" rx="100" fill="url(#ig_fill)"/>
-            <path fill="#fff" d="M256 176c-44.1 0-80 35.9-80 80s35.9 80 80 80 80-35.9 80-80-35.9-80-80-80zm0 128c-26.5 0-48-21.5-48-48s21.5-48 48-48 48 21.5 48 48-21.5 48-48 48zm101.6-141.6c0 10.7-8.7 19.6-19.6 19.6-10.7 0-19.6-8.9-19.6-19.6s8.9-19.6 19.6-19.6 19.6 8.7 19.6 19.6zM352 416H160c-35.3 0-64-28.7-64-64V160c0-35.3 28.7-64 64-64h192c35.3 0 64 28.7 64 64v192c0 35.3-28.7 64-64 64zm32-256c0-17.6-14.4-32-32-32H160c-17.6 0-32 14.4-32 32v192c0 17.6 14.4 32 32 32h192c17.6 0 32-14.4 32-32V160z"/>
+            <path fill="#fff" d="M256 176c-44.1 0-80 35.9-80 80s35.9 80 80 80 80-35.9 80-80-35.9-80-80-80zm0 128c-26.5 0-48-21.5-48-48s21.5-48 48-48 48 21.5 48 48-21.5 48-48 48zm101.6-141.6c0 10.7-8.7 19.6-19.6 19.6-10.7 0-19.6-8.9-19.6-19.6s8.9-19.6 19.6-19.6 19.6 8.7 19.6 19.6zM352 416H160c-35.3 0-64-28.7-64-64V160c0-35.3 28.7-64 64-64h192c35.3 0 64 28.7 64 64v192c0 35.3 28.7 64 64 64zm32-256c0-17.6-14.4-32-32-32H160c-17.6 0-32 14.4-32 32v192c0 17.6 14.4 32 32 32h192c17.6 0 32-14.4 32-32V160z"/>
           </svg>
         </span>
       </a>
@@ -329,7 +350,8 @@
       const pack     = document.getElementById('pack').value;
       const platform = document.getElementById('platform').value;
       const type     = document.getElementById('type').value;
-      const amount   = document.getElementById('amount').value;
+      const amount   = document.getElementById('amount').value; // string
+      const amountNum = parseFloat(amount); // pour tracking
       const handle   = document.getElementById('handle').value.trim();
       const postLink = document.getElementById('postLink').value.trim();
       const email    = document.getElementById('email').value.trim();
@@ -340,7 +362,7 @@
       }
 
       // Query params pour merci + message WhatsApp
-      const qp = new URLSearchParams({ pack, platform, type, amount, handle, post: postLink || '', email }).toString();
+      const qp = new URLSearchParams({ pack, platform, type, amount: String(amount), handle, post: postLink || '', email }).toString();
 
       const waMsg = encodeURIComponent(
 `Nouvelle commande BoosterX ✅
@@ -365,6 +387,18 @@ Email : ${email}`
       document.getElementById('hintMerci').href = merciUrl;
       bar.classList.remove('hidden'); bar.classList.add('flex');
       document.getElementById('hintClose').onclick = ()=> bar.classList.add('hidden');
+
+      // ---- TikTok: InitiateCheckout (optionnel mais utile) ----
+      try {
+        if (window.ttq && typeof ttq.track === 'function' && !isNaN(amountNum)) {
+          ttq.track('InitiateCheckout', {
+            value: amountNum,
+            currency: 'EUR',
+            contents: [{ content_id: pack, content_type: type }],
+            description: `${platform} - ${pack}`
+          });
+        }
+      } catch(e){ /* ignore */ }
 
       // Redirection PayPal dans le même onglet (iOS friendly)
       const paypalUrl = `https://paypal.me/${PAYPAL_HANDLE}/${encodeURIComponent(amount)}`;
