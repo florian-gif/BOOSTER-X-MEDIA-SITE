@@ -16,12 +16,47 @@ const PAYPAL_LINKS = {
 const modal = document.querySelector('#modal');
 const form = document.querySelector('#orderForm');
 const fields = ['pack', 'platform', 'type', 'amount'].reduce((all, id) => ({ ...all, [id]: document.querySelector(`#${id}`) }), {});
+const CONSENT_KEY = 'boosterx_analytics_consent';
+
+function trackEvent(name, params = {}) {
+  try { if (window.gtag) gtag('event', name, params); } catch (_) {}
+}
+
+function orderItem(order) {
+  return { item_id: order.pack, item_name: order.pack, item_category: order.platform, item_category2: order.type, price: Number(order.amount), quantity: 1 };
+}
+
+function applyAnalyticsConsent(choice) {
+  const granted = choice === 'granted';
+  try { if (window.gtag) gtag('consent', 'update', { analytics_storage: granted ? 'granted' : 'denied', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' }); } catch (_) {}
+  try { if (window.ttq) granted ? ttq.grantConsent() : ttq.revokeConsent(); } catch (_) {}
+}
+
+const savedConsent = localStorage.getItem(CONSENT_KEY);
+if (savedConsent) applyAnalyticsConsent(savedConsent);
+else document.querySelector('#cookieBanner').hidden = false;
+
+document.querySelector('#cookieAccept').addEventListener('click', () => {
+  localStorage.setItem(CONSENT_KEY, 'granted');
+  applyAnalyticsConsent('granted');
+  document.querySelector('#cookieBanner').hidden = true;
+  trackEvent('consent_update', { consent_choice: 'granted' });
+});
+document.querySelector('#cookieReject').addEventListener('click', () => {
+  localStorage.setItem(CONSENT_KEY, 'denied');
+  applyAnalyticsConsent('denied');
+  document.querySelector('#cookieBanner').hidden = true;
+});
+document.querySelector('#cookieSettings').addEventListener('click', () => {
+  document.querySelector('#cookieBanner').hidden = false;
+});
 
 document.querySelectorAll('.tab').forEach(tab => tab.addEventListener('click', () => {
   document.querySelectorAll('.tab').forEach(item => { item.classList.remove('active'); item.setAttribute('aria-selected', 'false'); });
   document.querySelectorAll('.pack-panel').forEach(panel => panel.classList.remove('active'));
   tab.classList.add('active'); tab.setAttribute('aria-selected', 'true');
   document.querySelector(`#${tab.dataset.target}`).classList.add('active');
+  trackEvent('pack_category_view', { category: tab.dataset.target });
 }));
 
 function openModal(button) {
@@ -34,6 +69,8 @@ function openModal(button) {
     combo: 'PayPal vous demandera le pseudo du profil et le lien de la publication.'
   };
   document.querySelector('#paypalInfo').textContent = instructions[button.dataset.type];
+  const selectedOrder = { pack: button.dataset.pack, platform: button.dataset.platform, type: button.dataset.type, amount: button.dataset.amount };
+  trackEvent('select_item', { currency: 'EUR', value: Number(selectedOrder.amount), items: [orderItem(selectedOrder)] });
   modal.classList.add('open'); modal.setAttribute('aria-hidden', 'false');
   document.body.style.overflow = 'hidden';
   setTimeout(() => form.querySelector('button[type="submit"]').focus(), 50);
@@ -47,6 +84,8 @@ document.addEventListener('keydown', event => { if (event.key === 'Escape') clos
 form.addEventListener('submit', event => {
   event.preventDefault();
   const order = { pack: fields.pack.value, platform: fields.platform.value, type: fields.type.value, amount: fields.amount.value };
+  trackEvent('begin_checkout', { currency: 'EUR', value: Number(order.amount), items: [orderItem(order)] });
+  trackEvent('paypal_redirect', { pack_name: order.pack, platform: order.platform, service_type: order.type, value: Number(order.amount), currency: 'EUR' });
   try { if (window.ttq?.track) ttq.track('InitiateCheckout', { value: Number(order.amount), currency: 'EUR', contents: [{ content_id: order.pack, content_type: order.type }] }); } catch (_) {}
   document.querySelector('#toast').classList.add('show');
   const paypalUrl = PAYPAL_LINKS[order.pack];
@@ -65,4 +104,10 @@ document.querySelectorAll('[data-count]').forEach(counter => {
   new IntersectionObserver(entries => entries.forEach(entry => { if (!entry.isIntersecting || done) return; done = true; const target = Number(counter.dataset.count); const start = performance.now(); const tick = now => { const p = Math.min((now - start) / 1100, 1); counter.textContent = `${(target * (1 - Math.pow(1 - p, 3))).toFixed(1)}K`; if (p < 1) requestAnimationFrame(tick); }; requestAnimationFrame(tick); })).observe(counter);
 });
 
-['brand-link','ig-link','tt-link','wa-link'].forEach(id => document.querySelector(`#${id}`)?.addEventListener('click', event => { try { if (window.gtag) gtag('event','click',{event_category:'outbound',event_label:id,link_url:event.currentTarget.href}); } catch (_) {} }));
+document.querySelectorAll('#ig-link,#tt-link,#wa-link,[data-track]').forEach(link => link.addEventListener('click', event => {
+  trackEvent('outbound_click', { link_name: event.currentTarget.dataset.track || event.currentTarget.id, link_url: event.currentTarget.href });
+}));
+
+document.querySelectorAll('.faq-list details').forEach(item => item.addEventListener('toggle', () => {
+  if (item.open) trackEvent('faq_open', { question: item.querySelector('summary')?.textContent.trim().replace('+', '').trim() });
+}));
