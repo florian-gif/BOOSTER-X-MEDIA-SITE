@@ -1,5 +1,19 @@
-const PAYPAL_HANDLE = 'FlorianDemaison615';
 const WHATSAPP_NUMBER = '33770111399';
+const PAYPAL_LINKS = {
+  'Instagram Followers 1K': 'https://www.paypal.com/ncp/payment/KT6QWU9M7GMHU',
+  'Instagram Followers 5K': 'https://www.paypal.com/ncp/payment/TJ4VG5JHG7RZQ',
+  'Instagram Followers 10K': 'https://www.paypal.com/ncp/payment/6F3E6BAYJEEWC',
+  'Instagram Likes 500': 'https://www.paypal.com/ncp/payment/W3867EV5HMGXC',
+  'Instagram Likes 1K': 'https://www.paypal.com/ncp/payment/3QNKVNMEEUBKY',
+  'Instagram Likes 5K': 'https://www.paypal.com/ncp/payment/QDKJTGM53NDTQ',
+  'Instagram Likes 10K': 'https://www.paypal.com/ncp/payment/94SPTKN3YJFJA',
+  'TikTok Followers 1K': 'https://www.paypal.com/ncp/payment/8QEC5D9HGVC8A',
+  'TikTok Followers 5K': 'https://www.paypal.com/ncp/payment/T5U26EETDQ3E4',
+  'TikTok Followers 10K': 'https://www.paypal.com/ncp/payment/WQUZG33TDNUXG',
+  'Pack Starter (1K abonnés + 1K likes)': 'https://www.paypal.com/ncp/payment/YXJDC642K2G2Y',
+  'Pack Boost (5K abonnés + 5K likes)': 'https://www.paypal.com/ncp/payment/JAAN6GKPLQWWY',
+  'Pack Premium (10K abonnés + 10K likes)': 'https://www.paypal.com/ncp/payment/CL4TXBBJV4HA2'
+};
 const modal = document.querySelector('#modal');
 const form = document.querySelector('#orderForm');
 const fields = ['pack', 'platform', 'type', 'amount'].reduce((all, id) => ({ ...all, [id]: document.querySelector(`#${id}`) }), {});
@@ -43,7 +57,13 @@ form.addEventListener('submit', event => {
   sessionStorage.setItem('bx_merci_url', `merci.html?${params}`);
   try { if (window.ttq?.track) ttq.track('InitiateCheckout', { value: Number(order.amount), currency: 'EUR', contents: [{ content_id: order.pack, content_type: order.type }] }); } catch (_) {}
   document.querySelector('#toast').classList.add('show');
-  setTimeout(() => { window.location.href = `https://paypal.me/${PAYPAL_HANDLE}/${encodeURIComponent(order.amount)}`; }, 450);
+  const paypalUrl = PAYPAL_LINKS[order.pack];
+  if (!paypalUrl) {
+    document.querySelector('#toast').classList.remove('show');
+    alert('Ce lien de paiement est momentanément indisponible. Contactez-nous sur WhatsApp.');
+    return;
+  }
+  setTimeout(() => { window.location.href = paypalUrl; }, 450);
 });
 
 function showOrderRecovery() {
