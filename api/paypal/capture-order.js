@@ -13,7 +13,7 @@ async function notifySeller(orderId, payment) {
       from: process.env.ORDER_FROM_EMAIL || 'BoosterX Media <onboarding@resend.dev>',
       to: [process.env.ORDER_NOTIFICATION_EMAIL],
       subject: `Nouvelle commande BoosterX — ${item.name || orderId}`,
-      html: `<h2>Nouvelle commande payée</h2><p><b>Pack :</b> ${escapeHtml(item.name)}</p><p><b>Montant :</b> ${escapeHtml(capture.amount?.value)} ${escapeHtml(capture.amount?.currency_code || 'EUR')}</p><p><b>Informations de livraison :</b><br>${escapeHtml(item.description || unit.description)}</p><p><b>Référence PayPal :</b> ${escapeHtml(orderId)}</p>`
+      html: `<h2>Nouvelle commande payée</h2><p><b>Pack :</b> ${escapeHtml(item.name)}</p><p><b>Montant :</b> ${escapeHtml(capture.amount?.value)} ${escapeHtml(capture.amount?.currency_code || 'EUR')}</p><p><b>Informations de livraison :</b><br>${escapeHtml(item.description || unit.description || unit.custom_id)}</p><p><b>Référence PayPal :</b> ${escapeHtml(orderId)}</p>`
     })
   });
   return response.ok;
@@ -24,7 +24,7 @@ module.exports = async function handler(req, res) {
   if (!/^[A-Z0-9]{10,30}$/.test(orderId)) return res.status(400).json({ error: 'Invalid order' });
   try {
     const token = await accessToken();
-    const response = await fetch(`${PAYPAL_API}/v2/checkout/orders/${orderId}/capture`, { method: 'POST', headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json', 'PayPal-Request-Id': `capture-${orderId}` } });
+    const response = await fetch(`${PAYPAL_API}/v2/checkout/orders/${orderId}/capture`, { method: 'POST', headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json', 'PayPal-Request-Id': `capture-${orderId}`, Prefer: 'return=representation' } });
     let data = await response.json();
     if (!response.ok) {
       const alreadyCaptured = data.details?.some(detail => detail.issue === 'ORDER_ALREADY_CAPTURED');
