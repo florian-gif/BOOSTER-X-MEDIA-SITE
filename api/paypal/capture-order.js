@@ -25,8 +25,14 @@ module.exports = async function handler(req, res) {
   try {
     const token = await accessToken();
     const response = await fetch(`${PAYPAL_API}/v2/checkout/orders/${orderId}/capture`, { method: 'POST', headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json', 'PayPal-Request-Id': `capture-${orderId}` } });
-    const data = await response.json();
-    if (!response.ok) throw new Error(data.message || 'Capture failed');
+    let data = await response.json();
+    if (!response.ok) {
+      const alreadyCaptured = data.details?.some(detail => detail.issue === 'ORDER_ALREADY_CAPTURED');
+      if (!alreadyCaptured) throw new Error(data.message || 'Capture failed');
+      const orderResponse = await fetch(`${PAYPAL_API}/v2/checkout/orders/${orderId}`, { headers: { Authorization: `Bearer ${token}` } });
+      data = await orderResponse.json();
+      if (!orderResponse.ok) throw new Error('Unable to retrieve captured order');
+    }
     let notified = false;
     if (data.status === 'COMPLETED') notified = await notifySeller(orderId, data);
     return res.status(200).json({ status: data.status, orderId: data.id, payer: data.payer?.email_address || '', notified });
