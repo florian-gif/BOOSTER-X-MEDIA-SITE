@@ -1,0 +1,1 @@
+.order-fields{display:grid;gap:11px}.order-fields label[hidden]{display:none}.order-fields input:focus{border-color:rgba(144,73,255,.75);box-shadow:0 0 0 3px rgba(144,73,255,.12)}.submit-button:disabled{opacity:.65;cursor:wait;transform:none}
