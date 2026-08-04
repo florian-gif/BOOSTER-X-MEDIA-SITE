@@ -19,8 +19,9 @@ document.querySelectorAll('.tab').forEach(tab => tab.addEventListener('click', (
 
 function openModal(button) {
   Object.keys(fields).forEach(key => fields[key].value = button.dataset[key]);
-  document.querySelector('#selectedPack').textContent = button.dataset.pack;
-  document.querySelector('#modalPrice').textContent = `${Number(button.dataset.amount).toLocaleString('fr-FR', { minimumFractionDigits: Number(button.dataset.amount) % 1 ? 2 : 0 })} €`;
+  document.querySelector('#selectedPack').textContent = window.BX_I18N?.packName(button.dataset.pack) || button.dataset.pack;
+  const locale = window.BX_I18N?.lang === 'en' ? 'en-GB' : 'fr-FR';
+  document.querySelector('#modalPrice').textContent = `${Number(button.dataset.amount).toLocaleString(locale, { minimumFractionDigits: Number(button.dataset.amount) % 1 ? 2 : 0 })} €`;
   const needsHandle = button.dataset.type !== 'likes';
   const needsPost = button.dataset.type !== 'followers';
   handleField.hidden = !needsHandle; handle.required = needsHandle;
@@ -39,10 +40,10 @@ document.addEventListener('keydown', event => { if (event.key === 'Escape') clos
 
 form.addEventListener('submit', async event => {
   event.preventDefault();
-  const order = { pack: fields.pack.value, platform: fields.platform.value, type: fields.type.value, amount: fields.amount.value, handle: handle.value.trim(), postLink: postLink.value.trim(), email: customerEmail.value.trim() };
+  const order = { pack: fields.pack.value, platform: fields.platform.value, type: fields.type.value, amount: fields.amount.value, handle: handle.value.trim(), postLink: postLink.value.trim(), email: customerEmail.value.trim(), lang: window.BX_I18N?.lang || 'fr' };
   trackEvent('begin_checkout', { currency: 'EUR', value: Number(order.amount), items: [orderItem(order)] });
   const submit = form.querySelector('button[type="submit"]');
-  submit.disabled = true; submit.querySelector('span').textContent = 'Préparation du paiement…';
+  submit.disabled = true; submit.querySelector('span').textContent = window.BX_I18N?.t('Préparation du paiement…') || 'Préparation du paiement…';
   try {
     const response = await fetch('/api/paypal/create-order', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(order) });
     const result = await response.json();
@@ -51,8 +52,8 @@ form.addEventListener('submit', async event => {
     trackEvent('paypal_redirect', { pack_name: order.pack, platform: order.platform, service_type: order.type, value: Number(order.amount), currency: 'EUR' });
     window.location.href = result.approvalUrl;
   } catch (error) {
-    alert('Le paiement est momentanément indisponible. Contactez-nous sur WhatsApp.');
-    submit.disabled = false; submit.querySelector('span').textContent = 'Continuer vers PayPal';
+    alert(window.BX_I18N?.t('Le paiement est momentanément indisponible. Contactez-nous sur WhatsApp.') || 'Le paiement est momentanément indisponible. Contactez-nous sur WhatsApp.');
+    submit.disabled = false; submit.querySelector('span').textContent = window.BX_I18N?.t('Continuer vers PayPal') || 'Continuer vers PayPal';
   }
 });
 
