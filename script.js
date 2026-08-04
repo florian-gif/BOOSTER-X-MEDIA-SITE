@@ -16,40 +16,10 @@ const PAYPAL_LINKS = {
 const modal = document.querySelector('#modal');
 const form = document.querySelector('#orderForm');
 const fields = ['pack', 'platform', 'type', 'amount'].reduce((all, id) => ({ ...all, [id]: document.querySelector(`#${id}`) }), {});
-const CONSENT_KEY = 'boosterx_analytics_consent';
-
-function trackEvent(name, params = {}) {
-  try { if (window.gtag) gtag('event', name, params); } catch (_) {}
-}
 
 function orderItem(order) {
   return { item_id: order.pack, item_name: order.pack, item_category: order.platform, item_category2: order.type, price: Number(order.amount), quantity: 1 };
 }
-
-function applyAnalyticsConsent(choice) {
-  const granted = choice === 'granted';
-  try { if (window.gtag) gtag('consent', 'update', { analytics_storage: granted ? 'granted' : 'denied', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' }); } catch (_) {}
-  try { if (window.ttq) granted ? ttq.grantConsent() : ttq.revokeConsent(); } catch (_) {}
-}
-
-const savedConsent = localStorage.getItem(CONSENT_KEY);
-if (savedConsent) applyAnalyticsConsent(savedConsent);
-else document.querySelector('#cookieBanner').hidden = false;
-
-document.querySelector('#cookieAccept').addEventListener('click', () => {
-  localStorage.setItem(CONSENT_KEY, 'granted');
-  applyAnalyticsConsent('granted');
-  document.querySelector('#cookieBanner').hidden = true;
-  trackEvent('consent_update', { consent_choice: 'granted' });
-});
-document.querySelector('#cookieReject').addEventListener('click', () => {
-  localStorage.setItem(CONSENT_KEY, 'denied');
-  applyAnalyticsConsent('denied');
-  document.querySelector('#cookieBanner').hidden = true;
-});
-document.querySelector('#cookieSettings').addEventListener('click', () => {
-  document.querySelector('#cookieBanner').hidden = false;
-});
 
 document.querySelectorAll('.tab').forEach(tab => tab.addEventListener('click', () => {
   document.querySelectorAll('.tab').forEach(item => { item.classList.remove('active'); item.setAttribute('aria-selected', 'false'); });
@@ -103,11 +73,3 @@ document.querySelectorAll('[data-count]').forEach(counter => {
   let done = false;
   new IntersectionObserver(entries => entries.forEach(entry => { if (!entry.isIntersecting || done) return; done = true; const target = Number(counter.dataset.count); const start = performance.now(); const tick = now => { const p = Math.min((now - start) / 1100, 1); counter.textContent = `${(target * (1 - Math.pow(1 - p, 3))).toFixed(1)}K`; if (p < 1) requestAnimationFrame(tick); }; requestAnimationFrame(tick); })).observe(counter);
 });
-
-document.querySelectorAll('#ig-link,#tt-link,#wa-link,[data-track]').forEach(link => link.addEventListener('click', event => {
-  trackEvent('outbound_click', { link_name: event.currentTarget.dataset.track || event.currentTarget.id, link_url: event.currentTarget.href });
-}));
-
-document.querySelectorAll('.faq-list details').forEach(item => item.addEventListener('toggle', () => {
-  if (item.open) trackEvent('faq_open', { question: item.querySelector('summary')?.textContent.trim().replace('+', '').trim() });
-}));
