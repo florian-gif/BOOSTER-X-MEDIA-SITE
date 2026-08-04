@@ -1,4 +1,3 @@
-const WHATSAPP_NUMBER = '33770111399';
 const PAYPAL_LINKS = {
   'Instagram Followers 1K': 'https://www.paypal.com/ncp/payment/KT6QWU9M7GMHU',
   'Instagram Followers 5K': 'https://www.paypal.com/ncp/payment/TJ4VG5JHG7RZQ',
@@ -29,13 +28,15 @@ function openModal(button) {
   Object.keys(fields).forEach(key => fields[key].value = button.dataset[key]);
   document.querySelector('#selectedPack').textContent = button.dataset.pack;
   document.querySelector('#modalPrice').textContent = `${Number(button.dataset.amount).toLocaleString('fr-FR', { minimumFractionDigits: Number(button.dataset.amount) % 1 ? 2 : 0 })} €`;
-  const postField = document.querySelector('#postField');
-  const needsPost = ['likes', 'combo'].includes(button.dataset.type);
-  postField.hidden = !needsPost;
-  document.querySelector('#postLink').required = needsPost;
+  const instructions = {
+    followers: `PayPal vous demandera le pseudo du profil ${button.dataset.platform}.`,
+    likes: 'PayPal vous demandera le lien de la publication Instagram.',
+    combo: 'PayPal vous demandera le pseudo du profil et le lien de la publication.'
+  };
+  document.querySelector('#paypalInfo').textContent = instructions[button.dataset.type];
   modal.classList.add('open'); modal.setAttribute('aria-hidden', 'false');
   document.body.style.overflow = 'hidden';
-  setTimeout(() => document.querySelector('#handle').focus(), 50);
+  setTimeout(() => form.querySelector('button[type="submit"]').focus(), 50);
 }
 
 function closeModal() { modal.classList.remove('open'); modal.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; }
@@ -45,16 +46,7 @@ document.addEventListener('keydown', event => { if (event.key === 'Escape') clos
 
 form.addEventListener('submit', event => {
   event.preventDefault();
-  const order = {
-    pack: fields.pack.value, platform: fields.platform.value, type: fields.type.value, amount: fields.amount.value,
-    handle: document.querySelector('#handle').value.trim().replace(/^@/, ''), postLink: document.querySelector('#postLink').value.trim(), email: document.querySelector('#email').value.trim()
-  };
-  if (!order.handle) return;
-  const params = new URLSearchParams({ pack: order.pack, platform: order.platform, type: order.type, amount: order.amount, handle: order.handle, post: order.postLink, email: order.email });
-  const message = encodeURIComponent(`Nouvelle commande BoosterX ✅\nPack : ${order.pack}\nPlateforme : ${order.platform}\nType : ${order.type}\nMontant : ${order.amount}€\nPseudo : ${order.handle}\nLien du post : ${order.postLink || '—'}\nEmail : ${order.email}`);
-  sessionStorage.setItem('bx_last_order', JSON.stringify(order));
-  sessionStorage.setItem('bx_last_wa', `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`);
-  sessionStorage.setItem('bx_merci_url', `merci.html?${params}`);
+  const order = { pack: fields.pack.value, platform: fields.platform.value, type: fields.type.value, amount: fields.amount.value };
   try { if (window.ttq?.track) ttq.track('InitiateCheckout', { value: Number(order.amount), currency: 'EUR', contents: [{ content_id: order.pack, content_type: order.type }] }); } catch (_) {}
   document.querySelector('#toast').classList.add('show');
   const paypalUrl = PAYPAL_LINKS[order.pack];
@@ -64,18 +56,6 @@ form.addEventListener('submit', event => {
     return;
   }
   setTimeout(() => { window.location.href = paypalUrl; }, 450);
-});
-
-function showOrderRecovery() {
-  const savedUrl = sessionStorage.getItem('bx_merci_url');
-  if (!savedUrl || sessionStorage.getItem('bx_recovery_dismissed') === '1') return;
-  document.querySelector('#recoveryLink').href = savedUrl;
-  document.querySelector('#orderRecovery').hidden = false;
-}
-window.addEventListener('pageshow', showOrderRecovery);
-document.querySelector('#recoveryClose').addEventListener('click', () => {
-  document.querySelector('#orderRecovery').hidden = true;
-  sessionStorage.setItem('bx_recovery_dismissed', '1');
 });
 
 const observer = new IntersectionObserver(entries => entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); } }), { threshold: .12 });
