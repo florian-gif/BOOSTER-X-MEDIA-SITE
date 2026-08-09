@@ -18,7 +18,17 @@
     'Développez votre présence avec des abonnés et des likes livrés rapidement. Des packs clairs, un paiement sécurisé et un accompagnement humain.': 'Grow your presence with followers and likes delivered quickly. Clear packages, secure payment and personal support.',
     'Découvrir les packs': 'Explore packages',
     'Parler à un conseiller': 'Chat with an advisor',
-    'Une équipe disponible pour vous accompagner': 'A team ready to support you',
+    'Une équipe disponible avant et après votre commande': 'A team available before and after your order',
+    'Support 7j/7': 'Support 7 days a week',
+    'Simulation de profil': 'Profile simulation',
+    'Objectif': 'Goal',
+    'Visibilité': 'Visibility',
+    'Signal social': 'Social signal',
+    'Profil renforcé': 'Stronger profile',
+    'Progression': 'Progress',
+    'Selon votre contenu': 'Depending on your content',
+    'Économisez 9,60 €': 'Save €9.60',
+    'Économisez 29,10 €': 'Save €29.10',
     'Profil': 'Profile',
     'Créateur digital': 'Digital creator',
     'K abonnés': 'K followers',
@@ -84,6 +94,8 @@
     'Dois-je donner mon mot de passe ?': 'Do I need to share my password?',
     'Non, jamais. Nous avons uniquement besoin de votre pseudo public et, pour les likes, du lien de la publication concernée.': 'Never. We only need your public username and, for likes, the link to the relevant post.',
     'Quel est le délai de livraison ?': 'How long does delivery take?',
+    'Les abonnés garantissent-ils la monétisation TikTok ?': 'Do followers guarantee TikTok monetization?',
+    'Non. Ils peuvent vous rapprocher d’un seuil d’abonnés, mais TikTok applique aussi d’autres critères d’éligibilité et vérifie le respect de ses règles. La création de contenu et les vues restent indispensables.': 'No. They may bring you closer to a follower threshold, but TikTok also applies other eligibility criteria and checks compliance with its rules. Content creation and views remain essential.',
     'La plupart des commandes sont traitées sous 24 à 48 heures. Le délai peut varier légèrement selon la taille du pack.': 'Most orders are processed within 24 to 48 hours. Timing may vary slightly depending on package size.',
     'Comment se passe le paiement ?': 'How does payment work?',
     'Vous êtes redirigé vers PayPal pour effectuer un paiement sécurisé. Aucun abonnement n’est créé.': 'You are redirected to PayPal for secure payment. No subscription is created.',
@@ -172,7 +184,7 @@
   document.querySelector('nav')?.setAttribute('aria-label', 'Main navigation');
   document.querySelector('.tabs')?.setAttribute('aria-label', 'Package types');
   document.querySelector('.hero-visual')?.setAttribute('aria-label', 'Preview of social media growth');
-  document.querySelector('.stars')?.setAttribute('aria-label', '5 out of 5 stars');
+  document.querySelector('.stars')?.setAttribute('aria-label', 'Support available 7 days a week');
   document.querySelector('.trust-strip')?.setAttribute('aria-label', 'Our commitments');
   document.querySelector('#cookieBanner')?.setAttribute('aria-label', 'Privacy preferences');
 })();
