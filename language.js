@@ -58,7 +58,7 @@
     'Le plus demandé': 'Most popular',
     'Donnez plus d’impact à vos publications.': 'Give your posts more impact.',
     'Suivi inclus': 'Support included',
-    'Faites grandir votre communauté TikTok.': 'Grow your TikTok community.',
+    'Faites grandir votre communauté TikTok et rapprochez-vous des critères de monétisation.': 'Grow your TikTok community and move closer to monetization eligibility.',
     'Meilleur choix': 'Best value',
     'likes': 'likes',
     'Choisir Starter': 'Choose Starter',
