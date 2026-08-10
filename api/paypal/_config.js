@@ -1,5 +1,5 @@
 const PACKS = {
-  'Instagram Followers 1K': '16.90', 'Instagram Followers 5K': '69.00', 'Instagram Followers 10K': '125.00',
+  'Instagram Followers 1K': '19.90', 'Instagram Followers 5K': '89.90', 'Instagram Followers 10K': '169.90',
   'Instagram Likes 500': '3.90', 'Instagram Likes 1K': '5.90', 'Instagram Likes 5K': '16.90', 'Instagram Likes 10K': '26.90',
   'TikTok Followers 1K': '19.90', 'TikTok Followers 5K': '89.90', 'TikTok Followers 10K': '169.90',
   'Pack Starter (1K abonnés + 1K likes)': '19.90', 'Pack Boost (5K abonnés + 5K likes)': '79.00', 'Pack Premium (10K abonnés + 10K likes)': '139.00'
