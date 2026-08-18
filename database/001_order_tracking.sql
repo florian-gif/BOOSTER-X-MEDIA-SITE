@@ -41,5 +41,9 @@ create index if not exists bx_snapshots_order_idx on public.bx_order_snapshots(o
 alter table public.bx_orders enable row level security;
 alter table public.bx_order_snapshots enable row level security;
 
+grant select, insert, update, delete on table public.bx_orders to service_role;
+grant select, insert, update, delete on table public.bx_order_snapshots to service_role;
+grant usage, select on sequence public.bx_order_snapshots_id_seq to service_role;
+
 comment on table public.bx_orders is 'Booster X server-side order and warranty tracking';
 comment on table public.bx_order_snapshots is 'Immutable, timestamped audience snapshots recorded by Booster X';

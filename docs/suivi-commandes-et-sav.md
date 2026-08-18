@@ -1,12 +1,14 @@
 # Activation du suivi Booster X
 
-Le code de traçabilité est prêt. Il utilise une base Postgres Supabase via son API serveur et ne transmet jamais la clé d'administration au navigateur public.
+Le code de traçabilité est actif sur la version de test. Il utilise une base Postgres Supabase via son API serveur et ne transmet jamais la clé Supabase au navigateur public.
 
-## 1. Créer les tables
+État au 18 août 2026 : tables créées, droits `service_role` limités aux tables de suivi, variables Vercel configurées et lecture du tableau vérifiée.
+
+## Reproduire la configuration
 
 Dans l'éditeur SQL Supabase, exécuter `database/001_order_tracking.sql`.
 
-## 2. Configurer les variables serveur
+### Variables serveur
 
 Ajouter dans le projet Vercel :
 
@@ -16,9 +18,11 @@ Ajouter dans le projet Vercel :
 
 Les variables PayPal et Resend déjà utilisées restent inchangées.
 
-## 3. Utiliser le tableau
+## Utiliser le tableau
 
 Après déploiement, ouvrir `/suivi-commandes.html` et saisir `BX_ADMIN_TOKEN`.
+
+Version de test actuelle : `https://booster-x-media-site-git-agent-su-5fe3f1-flos-projects-7316169c.vercel.app/suivi-commandes.html`.
 
 Pour chaque commande :
 
