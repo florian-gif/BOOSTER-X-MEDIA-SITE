@@ -2,7 +2,9 @@
 
 Le code de traçabilité est actif sur la version de test. Il utilise une base Postgres Supabase via son API serveur et ne transmet jamais la clé Supabase au navigateur public.
 
-État au 18 août 2026 : tables créées, droits `service_role` limités aux tables de suivi, variables Vercel configurées et lecture du tableau vérifiée.
+État au 18 août 2026 : tables créées, droits `service_role` limités aux tables de suivi, variables Vercel configurées et parcours complet vérifié avec un paiement PayPal Sandbox de 3,90 €.
+
+La commande payée apparaît avec le statut `paid`, l'environnement `Test Sandbox`, 500 likes et son relevé horodaté. Aucun argent réel n'a été débité.
 
 ## Reproduire la configuration
 
@@ -17,6 +19,8 @@ Ajouter dans le projet Vercel :
 - `BX_ADMIN_TOKEN` : mot de passe long et aléatoire réservé au tableau de suivi.
 
 Les variables PayPal et Resend déjà utilisées restent inchangées.
+
+Pour les tests, `PAYPAL_CLIENT_ID`, `PAYPAL_CLIENT_SECRET` et `PAYPAL_ENVIRONMENT=sandbox` sont limités à Preview. Les clés PayPal réelles sont limitées à Production afin qu'une version de test ne puisse jamais créer un paiement réel.
 
 ## Utiliser le tableau
 
