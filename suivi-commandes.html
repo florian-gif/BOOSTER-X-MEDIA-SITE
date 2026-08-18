@@ -5,29 +5,72 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="robots" content="noindex,nofollow">
   <title>Suivi des commandes — BoosterX Media</title>
+  <link rel="icon" href="images/favicon-v2-32.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="suivi-commandes.css">
 </head>
 <body>
-  <main class="shell">
-    <header><div><span class="kicker">BoosterX Media</span><h1>Commandes et garantie</h1><p>Les compteurs sont saisis uniquement après contrôle par Booster X.</p></div><button id="disconnect" class="ghost" hidden>Déconnexion</button></header>
-
-    <section id="login" class="card login">
-      <h2>Accès protégé</h2><p>Utilise le code d’administration configuré sur le serveur.</p>
-      <form id="loginForm"><input id="token" type="password" autocomplete="current-password" placeholder="Code d’administration" required><button type="submit">Ouvrir le suivi</button></form>
-    </section>
-
-    <section id="dashboard" hidden>
-      <div class="toolbar"><input id="search" placeholder="Référence PayPal, pseudo ou e-mail"><button id="refresh" class="ghost">Actualiser</button></div>
-      <p id="message" class="message"></p>
-      <div class="layout">
-        <section class="card orders"><h2>Commandes</h2><div id="orders"></div></section>
-        <section class="card detail"><div id="empty">Sélectionne une commande.</div><div id="detail" hidden></div></section>
+  <div class="app-frame">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Retour au site BoosterX Media">
+        <img src="images/logo-transparent-256.png" alt="" width="42" height="42">
+        <span><strong>BoosterX</strong><small>Media</small></span>
+      </a>
+      <div class="topbar-actions">
+        <span class="admin-label">Espace administration</span>
+        <button id="disconnect" class="ghost" hidden>Déconnexion</button>
       </div>
-    </section>
-  </main>
+    </header>
+
+    <main class="shell">
+      <header class="page-heading">
+        <div>
+          <span class="kicker">Gestion interne</span>
+          <h1>Suivi commandes &amp; SAV</h1>
+          <p>Retrouve les paiements, les relevés et les remplacements au même endroit.</p>
+        </div>
+      </header>
+
+      <section id="login" class="card login">
+        <div class="lock" aria-hidden="true">✓</div>
+        <span class="eyebrow">Accès sécurisé</span>
+        <h2>Connexion au tableau SAV</h2>
+        <p>Entre ton code administrateur pour consulter les commandes et gérer les demandes clients.</p>
+        <form id="loginForm">
+          <label for="token">Code d’administration</label>
+          <div class="login-fields">
+            <input id="token" type="password" autocomplete="current-password" placeholder="Saisir le code" required>
+            <button type="submit">Se connecter</button>
+          </div>
+        </form>
+        <small class="security-note">Accès réservé à BoosterX Media · Ne partage jamais ce code.</small>
+      </section>
+
+      <section id="dashboard" hidden>
+        <div class="toolbar">
+          <input id="search" aria-label="Rechercher une commande" placeholder="Référence PayPal, pseudo ou e-mail">
+          <button id="refresh" class="ghost">Actualiser</button>
+        </div>
+        <p id="message" class="message"></p>
+        <div class="layout">
+          <section class="card orders">
+            <div class="section-title"><h2>Commandes</h2><span>Dernières ventes</span></div>
+            <div id="orders"></div>
+          </section>
+          <section class="card detail">
+            <div id="empty" class="empty-state">
+              <span>↗</span>
+              <strong>Sélectionne une commande</strong>
+              <p>Son paiement, ses compteurs et son historique SAV apparaîtront ici.</p>
+            </div>
+            <div id="detail" hidden></div>
+          </section>
+        </div>
+      </section>
+    </main>
+  </div>
   <script src="suivi-commandes.js"></script>
 </body>
 </html>
