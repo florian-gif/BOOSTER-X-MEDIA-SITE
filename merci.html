@@ -1,1 +1,73 @@
-<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><meta name="theme-color" content="#08070c"><title>Confirmation — BoosterX Media</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="styles.css"><style>.thanks{min-height:100vh;display:grid;place-items:center;padding:30px}.thanks-card{width:min(660px,100%);padding:45px;border:1px solid var(--line);background:linear-gradient(145deg,#15121d,#0d0c11);border-radius:26px;box-shadow:var(--shadow)}.check{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:rgba(104,225,164,.1);border:1px solid rgba(104,225,164,.25);color:var(--green);font-size:25px}.thanks h1{font-size:36px;letter-spacing:-.05em;margin:22px 0 10px}.thanks p{color:var(--muted)}.recap{display:grid;gap:1px;margin:28px 0;background:var(--line);border:1px solid var(--line);border-radius:15px;overflow:hidden}.recap div{display:flex;justify-content:space-between;gap:25px;padding:12px 15px;background:#111017;font-size:12px}.recap span{color:var(--muted)}.thanks-actions{display:flex;gap:10px}.thanks-actions .button{flex:1}.wa{background:#21a864}.status{color:#c4a7e8!important;font-weight:700}.thanks small{display:block;text-align:center;color:#6f6977;margin-top:15px;font-size:9px}@media(max-width:600px){.thanks-card{padding:30px 22px}.thanks h1{font-size:29px}.thanks-actions{flex-direction:column}.recap div{display:block}.recap strong{display:block;margin-top:3px;overflow-wrap:anywhere}}</style></head><body><main class="thanks"><div class="thanks-card"><div class="check" id="check">…</div><h1 id="title">Confirmation du paiement…</h1><p class="status" id="status">Nous vérifions automatiquement votre règlement auprès de PayPal.</p><div class="recap" id="recap"></div><div class="thanks-actions"><a class="button wa" id="waBtn" target="_blank" rel="noopener">Contacter le support</a><a class="button button-ghost" href="index.html">Retour aux packs</a></div><small>Votre commande est associée automatiquement aux informations transmises.</small></div></main><script>const p=new URLSearchParams(location.search);let d={};try{d=JSON.parse(sessionStorage.getItem('bx_last_order'))||{}}catch(e){}const orderId=p.get('token')||d.orderId;const esc=v=>String(v||'—').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));const labels=[['Pack',d.pack],['Plateforme',d.platform],['Montant',d.amount?d.amount+' €':'—'],['Pseudo',d.handle],['Publication',d.postLink],['Email',d.email]];document.querySelector('#recap').innerHTML=labels.map(x=>`<div><span>${x[0]}</span><strong>${esc(x[1])}</strong></div>`).join('');const msg=encodeURIComponent(`Commande BoosterX\nRéférence PayPal : ${orderId||'—'}\nPack : ${d.pack||'—'}\nPseudo : ${d.handle||'—'}\nPublication : ${d.postLink||'—'}`);document.querySelector('#waBtn').href=`https://wa.me/33770111399?text=${msg}`;(async()=>{if(!orderId){document.querySelector('#title').textContent='Paiement non confirmé';document.querySelector('#status').textContent='Aucune référence PayPal n’a été trouvée.';document.querySelector('#check').textContent='!';return}try{const r=await fetch('/api/paypal/capture-order',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({orderId})});const x=await r.json();if(!r.ok||x.status!=='COMPLETED')throw new Error();document.querySelector('#title').textContent='Merci pour votre commande.';document.querySelector('#status').textContent='Paiement confirmé. Votre commande est maintenant prête à être traitée.';document.querySelector('#check').textContent='✓';sessionStorage.removeItem('bx_last_order');if(window.trackEvent)trackEvent('purchase',{transaction_id:x.orderId,value:Number(d.amount),currency:'EUR',items:[{item_name:d.pack}]})}catch(e){document.querySelector('#title').textContent='Vérification nécessaire';document.querySelector('#status').textContent='Le paiement n’a pas encore pu être confirmé. Contactez le support avec votre référence PayPal.';document.querySelector('#check').textContent='!' }})();</script></body></html>
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#08070c">
+  <title>Confirmation — BoosterX Media</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .thanks{min-height:100vh;display:grid;place-items:center;padding:30px}.thanks-card{width:min(660px,100%);padding:45px;border:1px solid var(--line);background:linear-gradient(145deg,#15121d,#0d0c11);border-radius:26px;box-shadow:var(--shadow)}.check{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:rgba(104,225,164,.1);border:1px solid rgba(104,225,164,.25);color:var(--green);font-size:25px}.thanks h1{font-size:36px;letter-spacing:-.05em;margin:22px 0 10px}.thanks p{color:var(--muted)}.recap{display:grid;gap:1px;margin:28px 0;background:var(--line);border:1px solid var(--line);border-radius:15px;overflow:hidden}.recap div{display:flex;justify-content:space-between;gap:25px;padding:12px 15px;background:#111017;font-size:12px}.recap span{color:var(--muted)}.thanks-actions{display:flex;gap:10px}.thanks-actions .button{flex:1}.wa{background:#21a864}.status{color:#c4a7e8!important;font-weight:700}.thanks small{display:block;text-align:center;color:#6f6977;margin-top:15px;font-size:9px}@media(max-width:600px){.thanks-card{padding:30px 22px}.thanks h1{font-size:29px}.thanks-actions{flex-direction:column}.recap div{display:block}.recap strong{display:block;margin-top:3px;overflow-wrap:anywhere}}
+  </style>
+  <script src="analytics-loader.js"></script>
+</head>
+<body>
+  <main class="thanks">
+    <div class="thanks-card">
+      <div class="check" id="check">…</div>
+      <h1 id="title">Confirmation du paiement…</h1>
+      <p class="status" id="status">Nous vérifions automatiquement votre règlement auprès de PayPal.</p>
+      <div class="recap" id="recap"></div>
+      <div class="thanks-actions">
+        <a class="button wa" id="waBtn" target="_blank" rel="noopener">Contacter le support</a>
+        <a class="button button-ghost" href="index.html">Retour aux packs</a>
+      </div>
+      <small>Votre commande est associée automatiquement aux informations transmises.</small>
+    </div>
+  </main>
+  <script src="tracking.js"></script>
+  <script>
+    const p = new URLSearchParams(location.search);
+    let d = {};
+    try { d = JSON.parse(sessionStorage.getItem('bx_last_order')) || {}; } catch (_) {}
+    const orderId = p.get('token') || d.orderId;
+    const esc = value => String(value || '—').replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[character]));
+    const labels = [['Pack', d.pack], ['Plateforme', d.platform], ['Montant', d.amount ? `${d.amount} €` : '—'], ['Pseudo', d.handle], ['Publication', d.postLink], ['Email', d.email]];
+    document.querySelector('#recap').innerHTML = labels.map(item => `<div><span>${item[0]}</span><strong>${esc(item[1])}</strong></div>`).join('');
+    const message = encodeURIComponent(`Commande BoosterX\nRéférence PayPal : ${orderId || '—'}\nPack : ${d.pack || '—'}\nPseudo : ${d.handle || '—'}\nPublication : ${d.postLink || '—'}`);
+    document.querySelector('#waBtn').href = `https://wa.me/33770111399?text=${message}`;
+
+    (async () => {
+      if (!orderId) {
+        document.querySelector('#title').textContent = 'Paiement non confirmé';
+        document.querySelector('#status').textContent = 'Aucune référence PayPal n’a été trouvée.';
+        document.querySelector('#check').textContent = '!';
+        return;
+      }
+      try {
+        const response = await fetch('/api/paypal/capture-order', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ orderId }) });
+        const result = await response.json();
+        if (!response.ok || result.status !== 'COMPLETED') throw new Error();
+        document.querySelector('#title').textContent = 'Merci pour votre commande.';
+        document.querySelector('#status').textContent = 'Paiement confirmé. Votre commande est maintenant prête à être traitée.';
+        document.querySelector('#check').textContent = '✓';
+        const trackingKey = `bx_purchase_tracked_${result.orderId}`;
+        if (!localStorage.getItem(trackingKey) && window.trackEvent) {
+          localStorage.setItem(trackingKey, '1');
+          const purchase = result.purchase || {};
+          trackEvent('purchase', { transaction_id: result.orderId, value: Number(purchase.value), currency: purchase.currency || 'EUR', items: [{ item_id: purchase.itemId, item_name: purchase.itemName, price: Number(purchase.value), quantity: 1 }] });
+        }
+        sessionStorage.removeItem('bx_last_order');
+      } catch (_) {
+        document.querySelector('#title').textContent = 'Vérification nécessaire';
+        document.querySelector('#status').textContent = 'Le paiement n’a pas encore pu être confirmé. Contactez le support avec votre référence PayPal.';
+        document.querySelector('#check').textContent = '!';
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -42,6 +42,15 @@ module.exports = async function handler(req, res) {
       }
       notified = await notifySeller(orderId, data);
     }
-    return res.status(200).json({ status: data.status, orderId: data.id, payer: data.payer?.email_address || '', notified, tracking });
+    const unit = data.purchase_units?.[0] || {};
+    const capture = unit.payments?.captures?.[0] || {};
+    const item = unit.items?.[0] || {};
+    const purchase = data.status === 'COMPLETED' ? {
+      itemId: item.sku || item.name || '',
+      itemName: item.name || '',
+      value: Number(capture.amount?.value || unit.amount?.value || 0),
+      currency: capture.amount?.currency_code || unit.amount?.currency_code || 'EUR'
+    } : null;
+    return res.status(200).json({ status: data.status, orderId: data.id, payer: data.payer?.email_address || '', notified, tracking, purchase });
   } catch (error) { return res.status(500).json({ error: 'Impossible de confirmer le paiement' }); }
 };

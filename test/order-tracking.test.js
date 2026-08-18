@@ -3,6 +3,7 @@ const assert = require('node:assert/strict');
 const { PACKS, PACK_DETAILS } = require('../api/paypal/_config');
 const admin = require('../api/orders/admin');
 const createPaypalOrder = require('../api/paypal/create-order');
+const capturePaypalOrder = require('../api/paypal/capture-order');
 
 test('every payable pack has server-side tracking quantities', () => {
   assert.deepEqual(Object.keys(PACK_DETAILS).sort(), Object.keys(PACKS).sort());
@@ -58,6 +59,47 @@ test('checkout records the server-side quantity and price', async () => {
     assert.equal(stored.payment_environment, 'sandbox');
     assert.equal(databaseHeaders.apikey, 'sb_secret_test');
     assert.equal(databaseHeaders.Authorization, undefined);
+  } finally {
+    global.fetch = previousFetch;
+    process.env = previousEnv;
+  }
+});
+
+test('payment confirmation returns server-verified conversion data', async () => {
+  const previousFetch = global.fetch;
+  const previousEnv = { ...process.env };
+  process.env.PAYPAL_CLIENT_ID = 'client';
+  process.env.PAYPAL_CLIENT_SECRET = 'secret';
+  process.env.PAYPAL_ENVIRONMENT = 'sandbox';
+  delete process.env.SUPABASE_URL;
+  delete process.env.SUPABASE_SERVICE_ROLE_KEY;
+  delete process.env.RESEND_API_KEY;
+  delete process.env.ORDER_NOTIFICATION_EMAIL;
+  global.fetch = async url => {
+    if (url.endsWith('/v1/oauth2/token')) return { ok: true, json: async () => ({ access_token: 'paypal-token' }) };
+    if (url.endsWith('/v2/checkout/orders/PAYPALORDER123/capture')) return {
+      ok: true,
+      json: async () => ({
+        id: 'PAYPALORDER123',
+        status: 'COMPLETED',
+        purchase_units: [{
+          amount: { value: '19.90', currency_code: 'EUR' },
+          items: [{ sku: 'Instagram Followers 1K', name: 'Instagram Followers 1K' }],
+          payments: { captures: [{ amount: { value: '19.90', currency_code: 'EUR' } }] }
+        }]
+      })
+    };
+    throw new Error(`Unexpected request: ${url}`);
+  };
+  let statusCode;
+  let payload;
+  const req = { method: 'POST', body: { orderId: 'PAYPALORDER123' } };
+  const res = { status(code) { statusCode = code; return this; }, json(value) { payload = value; return value; } };
+  try {
+    await capturePaypalOrder(req, res);
+    assert.equal(statusCode, 200);
+    assert.equal(payload.status, 'COMPLETED');
+    assert.deepEqual(payload.purchase, { itemId: 'Instagram Followers 1K', itemName: 'Instagram Followers 1K', value: 19.9, currency: 'EUR' });
   } finally {
     global.fetch = previousFetch;
     process.env = previousEnv;

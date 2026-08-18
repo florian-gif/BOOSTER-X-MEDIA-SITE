@@ -1,7 +1,32 @@
 const CONSENT_KEY = 'boosterx_analytics_consent';
 
+function tiktokEvent(name, params) {
+  const eventNames = {
+    select_item: 'ViewContent',
+    begin_checkout: 'InitiateCheckout',
+    purchase: 'Purchase'
+  };
+  const eventName = eventNames[name];
+  if (!eventName) return;
+
+  const item = params.items?.[0] || {};
+  const price = Number(item.price ?? params.value);
+  const properties = {
+    content_id: item.item_id || item.item_name,
+    content_name: item.item_name,
+    content_type: 'product',
+    quantity: Number(item.quantity) || 1,
+    currency: params.currency || 'EUR',
+    value: Number(params.value) || price || 0
+  };
+  if (Number.isFinite(price)) properties.price = price;
+
+  ttq.track(eventName, properties);
+}
+
 window.trackEvent = function trackEvent(name, params = {}) {
   try { if (window.gtag) gtag('event', name, params); } catch (_) {}
+  try { if (window.ttq) tiktokEvent(name, params); } catch (_) {}
 };
 
 function applyAnalyticsConsent(choice) {
