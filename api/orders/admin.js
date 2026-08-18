@@ -57,7 +57,8 @@ module.exports = async function handler(req, res) {
     if (stage === 'refill') changes.status = 'delivered';
     const updated = Object.keys(changes).length ? await updateOrderByPaypalId(orderId, changes) : order;
     return res.status(200).json({ order: updated, snapshot });
-  } catch (_) {
-    return res.status(500).json({ error: 'Impossible d’enregistrer le relevé' });
+  } catch (error) {
+    console.error('Order tracking API error:', error.message);
+    return res.status(500).json({ error: 'Impossible d’accéder au suivi' });
   }
 };

@@ -1,8 +1,11 @@
-const jsonHeaders = () => ({
-  apikey: process.env.SUPABASE_SERVICE_ROLE_KEY,
-  Authorization: `Bearer ${process.env.SUPABASE_SERVICE_ROLE_KEY}`,
-  'Content-Type': 'application/json'
-});
+const jsonHeaders = () => {
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  return {
+    apikey: key,
+    ...(String(key).startsWith('eyJ') ? { Authorization: `Bearer ${key}` } : {}),
+    'Content-Type': 'application/json'
+  };
+};
 
 function configured() {
   return Boolean(process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY);

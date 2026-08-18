@@ -27,15 +27,17 @@ test('checkout records the server-side quantity and price', async () => {
   const previousFetch = global.fetch;
   const previousEnv = { ...process.env };
   let stored;
+  let databaseHeaders;
   process.env.PAYPAL_CLIENT_ID = 'client';
   process.env.PAYPAL_CLIENT_SECRET = 'secret';
   process.env.SUPABASE_URL = 'https://database.example';
-  process.env.SUPABASE_SERVICE_ROLE_KEY = 'service-key';
+  process.env.SUPABASE_SERVICE_ROLE_KEY = 'sb_secret_test';
   global.fetch = async (url, options = {}) => {
     if (url.endsWith('/v1/oauth2/token')) return { ok: true, json: async () => ({ access_token: 'paypal-token' }) };
     if (url.endsWith('/v2/checkout/orders')) return { ok: true, json: async () => ({ id: 'PAYPALORDER123', links: [{ rel: 'approve', href: 'https://paypal.example/approve' }] }) };
     if (url === 'https://database.example/rest/v1/bx_orders') {
       stored = JSON.parse(options.body);
+      databaseHeaders = options.headers;
       return { ok: true, text: async () => JSON.stringify([{ id: 'internal-order', ...stored }]) };
     }
     throw new Error(`Unexpected request: ${url}`);
@@ -52,6 +54,8 @@ test('checkout records the server-side quantity and price', async () => {
     assert.equal(stored.followers_ordered, 1000);
     assert.equal(stored.normalized_handle, 'exemple');
     assert.equal(stored.customer_email, 'client@example.com');
+    assert.equal(databaseHeaders.apikey, 'sb_secret_test');
+    assert.equal(databaseHeaders.Authorization, undefined);
   } finally {
     global.fetch = previousFetch;
     process.env = previousEnv;
