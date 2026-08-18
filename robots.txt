@@ -2,5 +2,6 @@ User-agent: *
 Allow: /
 Disallow: /merci.html
 Disallow: /merci.html.
+Disallow: /suivi-commandes.html
 
 Sitemap: https://www.boosterxmedia.com/sitemap.xml

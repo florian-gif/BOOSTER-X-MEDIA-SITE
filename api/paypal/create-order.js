@@ -1,9 +1,11 @@
-const { PACKS, PAYPAL_API, accessToken } = require('./_config');
+const { PACKS, PACK_DETAILS, PAYPAL_API, accessToken } = require('./_config');
+const { configured: trackingConfigured, createOrder: saveTrackedOrder } = require('../orders/_store');
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
   try {
     const { pack, platform, type, handle = '', postLink = '', email = '', lang = 'fr' } = req.body || {};
     const amount = PACKS[pack];
+    const quantities = PACK_DETAILS[pack];
     if (!amount || !email || (type !== 'likes' && !handle) || (type !== 'followers' && !postLink)) return res.status(400).json({ error: 'Informations incomplètes' });
     const origin = `https://${req.headers['x-forwarded-host'] || req.headers.host || 'www.boosterxmedia.com'}`;
     const token = await accessToken();
@@ -16,6 +18,23 @@ module.exports = async function handler(req, res) {
     if (!response.ok) throw new Error(data.message || 'PayPal order creation failed');
     const approvalUrl = data.links?.find(link => ['payer-action', 'approve', 'payer'].includes(link.rel))?.href;
     if (!approvalUrl) throw new Error('PayPal approval link missing');
-    return res.status(200).json({ orderId: data.id, approvalUrl });
+    if (trackingConfigured()) {
+      const normalizedHandle = handle.trim().replace(/^@+/, '').toLowerCase();
+      await saveTrackedOrder({
+        paypal_order_id: data.id,
+        pack,
+        platform,
+        service_type: type,
+        handle: handle.trim() || null,
+        normalized_handle: normalizedHandle || null,
+        post_link: cleanPostLink || null,
+        customer_email: email.trim().toLowerCase(),
+        amount: Number(amount),
+        currency: 'EUR',
+        followers_ordered: quantities?.followers || 0,
+        likes_ordered: quantities?.likes || 0
+      });
+    }
+    return res.status(200).json({ orderId: data.id, approvalUrl, tracking: trackingConfigured() });
   } catch (error) { return res.status(500).json({ error: 'Impossible de préparer le paiement' }); }
 };

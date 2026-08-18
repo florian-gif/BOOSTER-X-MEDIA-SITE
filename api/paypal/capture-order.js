@@ -1,4 +1,5 @@
 const { PAYPAL_API, accessToken } = require('./_config');
+const { configured: trackingConfigured, updateOrderByPaypalId } = require('../orders/_store');
 const escapeHtml = value => String(value || '—').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[char]));
 
 async function notifySeller(orderId, payment) {
@@ -34,7 +35,13 @@ module.exports = async function handler(req, res) {
       if (!orderResponse.ok) throw new Error('Unable to retrieve captured order');
     }
     let notified = false;
-    if (data.status === 'COMPLETED') notified = await notifySeller(orderId, data);
-    return res.status(200).json({ status: data.status, orderId: data.id, payer: data.payer?.email_address || '', notified });
+    let tracking = false;
+    if (data.status === 'COMPLETED') {
+      if (trackingConfigured()) {
+        try { tracking = Boolean(await updateOrderByPaypalId(orderId, { status: 'paid', paid_at: new Date().toISOString() })); } catch (_) {}
+      }
+      notified = await notifySeller(orderId, data);
+    }
+    return res.status(200).json({ status: data.status, orderId: data.id, payer: data.payer?.email_address || '', notified, tracking });
   } catch (error) { return res.status(500).json({ error: 'Impossible de confirmer le paiement' }); }
 };

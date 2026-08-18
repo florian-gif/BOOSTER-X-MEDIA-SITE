@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Suivi des commandes — BoosterX Media</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="suivi-commandes.css">
+</head>
+<body>
+  <main class="shell">
+    <header><div><span class="kicker">BoosterX Media</span><h1>Commandes et garantie</h1><p>Les compteurs sont saisis uniquement après contrôle par Booster X.</p></div><button id="disconnect" class="ghost" hidden>Déconnexion</button></header>
+
+    <section id="login" class="card login">
+      <h2>Accès protégé</h2><p>Utilise le code d’administration configuré sur le serveur.</p>
+      <form id="loginForm"><input id="token" type="password" autocomplete="current-password" placeholder="Code d’administration" required><button type="submit">Ouvrir le suivi</button></form>
+    </section>
+
+    <section id="dashboard" hidden>
+      <div class="toolbar"><input id="search" placeholder="Référence PayPal, pseudo ou e-mail"><button id="refresh" class="ghost">Actualiser</button></div>
+      <p id="message" class="message"></p>
+      <div class="layout">
+        <section class="card orders"><h2>Commandes</h2><div id="orders"></div></section>
+        <section class="card detail"><div id="empty">Sélectionne une commande.</div><div id="detail" hidden></div></section>
+      </div>
+    </section>
+  </main>
+  <script src="suivi-commandes.js"></script>
+</body>
+</html>
