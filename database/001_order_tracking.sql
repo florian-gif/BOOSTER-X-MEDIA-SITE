@@ -13,6 +13,7 @@ create table if not exists public.bx_orders (
   customer_email text not null,
   amount numeric(10,2) not null,
   currency text not null default 'EUR',
+  payment_environment text not null default 'live' check (payment_environment in ('live', 'sandbox')),
   followers_ordered integer not null default 0,
   likes_ordered integer not null default 0,
   followers_baseline integer,
@@ -23,6 +24,8 @@ create table if not exists public.bx_orders (
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
+
+alter table public.bx_orders add column if not exists payment_environment text not null default 'live';
 
 create table if not exists public.bx_order_snapshots (
   id bigint generated always as identity primary key,

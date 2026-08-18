@@ -37,6 +37,7 @@ function renderDetail({order,snapshots}) {
   const refill=order.followers_guaranteed_floor!=null&&current?Math.max(0,order.followers_guaranteed_floor-current.count_value):null;
   $('#detail').innerHTML=`<h2>${esc(order.pack)}</h2><div class="facts">
     <div class="fact"><span>Référence PayPal</span><strong>${esc(order.paypal_order_id)}</strong></div><div class="fact"><span>Statut</span><strong>${esc(order.status)}</strong></div>
+    <div class="fact"><span>Environnement</span><strong>${order.payment_environment==='sandbox'?'Test Sandbox':'Paiement réel'}</strong></div>
     <div class="fact"><span>Profil</span><strong>${esc(order.handle)}</strong></div><div class="fact"><span>E-mail</span><strong>${esc(order.customer_email)}</strong></div>
     <div class="fact"><span>Abonnés commandés</span><strong>${esc(order.followers_ordered)}</strong></div><div class="fact"><span>Likes commandés</span><strong>${esc(order.likes_ordered)}</strong></div>
   </div><div class="guarantee"><strong>Seuil garanti : ${esc(order.followers_guaranteed_floor)}</strong><br><span>Garantie jusqu’au ${date(order.warranty_ends_at)}${refill===null?'':` · Remplacement suggéré : ${refill}`}</span></div>

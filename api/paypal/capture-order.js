@@ -1,4 +1,4 @@
-const { PAYPAL_API, accessToken } = require('./_config');
+const { paypalApi, accessToken } = require('./_config');
 const { configured: trackingConfigured, updateOrderByPaypalId } = require('../orders/_store');
 const escapeHtml = value => String(value || '—').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[char]));
 
@@ -25,12 +25,12 @@ module.exports = async function handler(req, res) {
   if (!/^[A-Z0-9]{10,30}$/.test(orderId)) return res.status(400).json({ error: 'Invalid order' });
   try {
     const token = await accessToken();
-    const response = await fetch(`${PAYPAL_API}/v2/checkout/orders/${orderId}/capture`, { method: 'POST', headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json', 'PayPal-Request-Id': `capture-${orderId}`, Prefer: 'return=representation' } });
+    const response = await fetch(`${paypalApi()}/v2/checkout/orders/${orderId}/capture`, { method: 'POST', headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json', 'PayPal-Request-Id': `capture-${orderId}`, Prefer: 'return=representation' } });
     let data = await response.json();
     if (!response.ok) {
       const alreadyCaptured = data.details?.some(detail => detail.issue === 'ORDER_ALREADY_CAPTURED');
       if (!alreadyCaptured) throw new Error(data.message || 'Capture failed');
-      const orderResponse = await fetch(`${PAYPAL_API}/v2/checkout/orders/${orderId}`, { headers: { Authorization: `Bearer ${token}` } });
+      const orderResponse = await fetch(`${paypalApi()}/v2/checkout/orders/${orderId}`, { headers: { Authorization: `Bearer ${token}` } });
       data = await orderResponse.json();
       if (!orderResponse.ok) throw new Error('Unable to retrieve captured order');
     }

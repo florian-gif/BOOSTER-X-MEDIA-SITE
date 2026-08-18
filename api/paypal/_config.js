@@ -19,12 +19,17 @@ const PACK_DETAILS = {
   'Pack Boost (5K abonnés + 5K likes)': { followers: 5000, likes: 5000 },
   'Pack Premium (10K abonnés + 10K likes)': { followers: 10000, likes: 10000 }
 };
-const PAYPAL_API = 'https://api-m.paypal.com';
+function paypalEnvironment() {
+  return process.env.PAYPAL_ENVIRONMENT === 'sandbox' ? 'sandbox' : 'live';
+}
+function paypalApi() {
+  return paypalEnvironment() === 'sandbox' ? 'https://api-m.sandbox.paypal.com' : 'https://api-m.paypal.com';
+}
 async function accessToken() {
   if (!process.env.PAYPAL_CLIENT_ID || !process.env.PAYPAL_CLIENT_SECRET) throw new Error('PayPal credentials missing');
   const auth = Buffer.from(`${process.env.PAYPAL_CLIENT_ID}:${process.env.PAYPAL_CLIENT_SECRET}`).toString('base64');
-  const response = await fetch(`${PAYPAL_API}/v1/oauth2/token`, { method: 'POST', headers: { Authorization: `Basic ${auth}`, 'Content-Type': 'application/x-www-form-urlencoded' }, body: 'grant_type=client_credentials' });
+  const response = await fetch(`${paypalApi()}/v1/oauth2/token`, { method: 'POST', headers: { Authorization: `Basic ${auth}`, 'Content-Type': 'application/x-www-form-urlencoded' }, body: 'grant_type=client_credentials' });
   if (!response.ok) throw new Error('PayPal authentication failed');
   return (await response.json()).access_token;
 }
-module.exports = { PACKS, PACK_DETAILS, PAYPAL_API, accessToken };
+module.exports = { PACKS, PACK_DETAILS, paypalApi, paypalEnvironment, accessToken };
